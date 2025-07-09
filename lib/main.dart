@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/splash_screen.dart';
 
 void main() {
@@ -16,16 +18,21 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: const SplashScreen(),
-          builder: (context, widget) {
-            ScreenUtil.init(context);
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-              child: widget!,
-            );
-          },
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => AuthBloc()),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: const SplashScreen(),
+            builder: (context, widget) {
+              ScreenUtil.init(context);
+              return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: widget!,
+              );
+            },
+          ),
         );
       },
     );
