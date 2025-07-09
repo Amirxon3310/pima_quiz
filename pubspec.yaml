@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
+  flutter_screenutil: ^5.9.3
   flutter_svg: ^2.2.0
   image_picker: ^1.1.2
   lottie: ^3.3.1
@@ -24,4 +25,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    assest: assets/images/
+    - assets/images/
