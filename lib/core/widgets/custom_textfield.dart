@@ -23,6 +23,7 @@ class CustomTextField extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
+            fontFamily: "Nunito",
             color: Colors.white,
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
@@ -33,12 +34,13 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           obscureText: isPassword,
           style: TextStyle(
+            fontFamily: "Nunito",
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(color: Colors.white70),
+            hintStyle: TextStyle(color: Colors.white70, fontFamily: "Nunito"),
             suffixIcon: isPassword
                 ? const Icon(Icons.visibility_off, color: Color(0xff6949FF))
                 : null,

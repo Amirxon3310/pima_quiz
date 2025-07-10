@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/core/resources/app_colors.dart';
 
 class WAccountType extends StatelessWidget {
   final IconData icon;
   final String title;
-  final Color color;
+  final LinearGradient gradient;
   const WAccountType({
     super.key,
     required this.icon,
     required this.title,
-    required this.color,
+    required this.gradient,
   });
 
   @override
@@ -18,7 +19,7 @@ class WAccountType extends StatelessWidget {
       height: 92,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0xff35383F),
+        color: AppColors.dark4,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Row(
@@ -27,7 +28,7 @@ class WAccountType extends StatelessWidget {
             width: 92,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: color,
+              gradient: gradient,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(16.r),
                 bottomLeft: Radius.circular(16.r),
@@ -55,6 +56,7 @@ class WAccountType extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
+                fontFamily: "Nunito",
                 color: Colors.white,
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,

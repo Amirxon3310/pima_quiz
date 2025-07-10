@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "Hello there ",
                     style: TextStyle(
+                      fontFamily: "Nunito",
                       color: Colors.white,
                       fontSize: 28.sp,
                       fontWeight: FontWeight.bold,
@@ -67,7 +68,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Text(
                     "Remember me",
-                    style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14.sp,
+                      fontFamily: "Nunito",
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   Spacer(),
                   TextButton(
@@ -75,6 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       "Forgot Password?",
                       style: TextStyle(
+                        fontFamily: "Nunito",
+                        fontWeight: FontWeight.bold,
                         color: Color(0xFF7B61FF),
                         fontSize: 14.sp,
                       ),
@@ -111,7 +119,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(width: 10.w),
                     Text(
                       "Continue with Google",
-                      style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                        fontFamily: "Nunito",
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),

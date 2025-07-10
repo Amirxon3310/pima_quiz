@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/features/auth/presentation/widgets/w_account_type.dart';
 
@@ -10,7 +11,7 @@ class SelectAccaountType extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xff181A20),
+        backgroundColor: AppColors.dark1,
         body: Padding(
           padding: EdgeInsets.only(top: 16, left: 24, right: 24),
           child: SingleChildScrollView(
@@ -35,7 +36,7 @@ class SelectAccaountType extends StatelessWidget {
                           width: 0.6.sw,
                           height: 12.h,
                           decoration: BoxDecoration(
-                            color: Color(0xFF2A2A2A),
+                            color: AppColors.dark4,
                             borderRadius: BorderRadius.circular(100.r),
                           ),
                           child: FractionallySizedBox(
@@ -43,7 +44,7 @@ class SelectAccaountType extends StatelessWidget {
                             widthFactor: 0.33,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Color(0xFF6C5CE7),
+                                color: AppColors.primary500,
                                 borderRadius: BorderRadius.circular(100.r),
                               ),
                             ),
@@ -53,23 +54,29 @@ class SelectAccaountType extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 24.h),
-                    Text(
-                      'Siz qaysi toifaga kirasiz?',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w600,
+                    Center(
+                      child: Text(
+                        'Siz qaysi toifaga kirasiz ?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Nunito",
+                        ),
                       ),
                     ),
                     SizedBox(height: 16.h),
-                    Text(
-                      'Toyfani tanlash orqali sizga qanday testlarni\ntafsiya qilishni xal qilamiz!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFFB0B0B0),
-                        fontSize: 14.sp,
-                        height: 1.4,
+                    Center(
+                      child: Text(
+                        'Toyfani tanlash orqali sizga qanday testlarni\ntafsiya qilishni xal qilamiz!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFFB0B0B0),
+                          fontSize: 14.sp,
+                          height: 1.4,
+                          fontFamily: "Nunito",
+                        ),
                       ),
                     ),
                     SizedBox(height: 40.h),
@@ -79,22 +86,22 @@ class SelectAccaountType extends StatelessWidget {
                         WAccountType(
                           icon: Icons.school,
                           title: 'Maktab o\'quvchisi',
-                          color: Color(0xff3476fd),
+                          gradient: AppColors.gradientBlue,
                         ),
                         WAccountType(
                           icon: Icons.person,
                           title: 'O\'qtuvchi',
-                          color: Color(0xFFFF9500),
+                          gradient: AppColors.gradientOrange,
                         ),
                         WAccountType(
                           icon: Icons.group,
                           title: 'Talaba',
-                          color: Color(0xFF00C896),
+                          gradient: AppColors.gradientGreen,
                         ),
                         WAccountType(
                           icon: Icons.work,
                           title: 'Ishchi',
-                          color: Color(0xFFFF6B6B),
+                          gradient: AppColors.gradientRed,
                         ),
                       ],
                     ),

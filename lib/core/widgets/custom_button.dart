@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/core/resources/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -20,8 +21,7 @@ class CustomButton extends StatelessWidget {
       height: 58.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor:
-              isFilled ? Color(0xff543ACC) : const Color(0xFF2C2C2E),
+          backgroundColor: isFilled ? AppColors.primary500 : AppColors.dark3,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.r),
@@ -30,7 +30,11 @@ class CustomButton extends StatelessWidget {
         onPressed: onTap,
         child: Text(
           text,
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.bold,
+            fontFamily: "Nunito",
+          ),
         ),
       ),
     );
