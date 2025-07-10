@@ -6,6 +6,8 @@ import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
+import 'package:pima_quiz/features/auth/presentation/pages/login_screen.dart';
+import 'package:pima_quiz/features/auth/presentation/pages/select_accaount_type.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -90,29 +92,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             );
           }),
           SizedBox(height: 24.h),
-          Column(
-            children: [
-              CustomButton(
-                text: "GET STARTED",
-                onTap: () {
-                  final currentIndex =
-                      context.read<AuthBloc>().state.pageViewCurrentIndex;
-                  if (currentIndex < _data.length - 1) {
-                    _controller.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease,
+          Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              children: [
+                CustomButton(
+                  text: "GET STARTED",
+                  onTap: () {
+                    final currentIndex =
+                        context.read<AuthBloc>().state.pageViewCurrentIndex;
+                    if (currentIndex < _data.length - 1) {
+                      _controller.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.ease,
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SelectAccaountType(),
+                        ),
+                      );
+                    }
+                  },
+                ),
+                SizedBox(height: 12.h),
+                CustomButton(
+                  text: "I ALREADY HAVE AN ACCOUNT",
+                  isFilled: false,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
                     );
-                  } else {}
-                },
-              ),
-              SizedBox(height: 12.h),
-              CustomButton(
-                text: "I ALREADY HAVE AN ACCOUNT",
-                isFilled: false,
-                onTap: () {},
-              ),
-              SizedBox(height: 30.h),
-            ],
+                  },
+                ),
+                SizedBox(height: 30.h),
+              ],
+            ),
           )
         ],
       ),
