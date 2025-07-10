@@ -118,7 +118,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     }
                   },
                 ),
-                SizedBox(height: 12.h),
+                SizedBox(height: 18.h),
                 CustomButton(
                   text: "I ALREADY HAVE AN ACCOUNT",
                   isFilled: false,
