@@ -13,7 +13,8 @@ class UserModel {
   final String phoneNumber;
   final String username;
   final DateTime birthday;
-  final UserStatus userStatus;
+  final UserStatus? userStatus;
+  final DateTime createdAt;
 
   UserModel({
     required this.id,
@@ -22,8 +23,9 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.username,
-    required this.userStatus,
+    this.userStatus,
     required this.birthday,
+    required this.createdAt,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) {
@@ -36,6 +38,21 @@ class UserModel {
       username: json['username'],
       userStatus: json['status'],
       birthday: json['birthday'],
+      createdAt: json['createdAt'],
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'user_id': id,
+      'age': age,
+      'full_name': fullName,
+      'email': email,
+      'phone': phoneNumber,
+      'username': username,
+      'status': userStatus?.name,
+      'birthday': birthday.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+    };
   }
 }

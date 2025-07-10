@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
+import 'package:pima_quiz/core/resources/app_lotties.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/core/widgets/custom_textfield.dart';
 import 'package:pima_quiz/features/auth/data/models/user_model.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
 
 class RegisterScreen extends StatefulWidget {
   final UserStatus? status;
@@ -19,6 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final userNameController = TextEditingController();
   final dateOfBirthController = TextEditingController();
   final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   final ageNameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
@@ -113,33 +120,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   CustomTextField(
                     title: "Username",
-                    controller: fullNameController,
+                    controller: userNameController,
                     hintText: "andrew_ainsley",
                   ),
                   CustomTextField(
                     title: "Date of Birth",
-                    controller: fullNameController,
+                    controller: dateOfBirthController,
                     hintText: "12/27/1995",
                   ),
                   CustomTextField(
                     title: "Email",
-                    controller: fullNameController,
+                    controller: emailController,
                     hintText: "andrew.ainsley@yourdomain.com",
                   ),
                   CustomTextField(
                     title: "Age",
-                    controller: fullNameController,
+                    controller: ageNameController,
                     hintText: "25",
                   ),
                   CustomTextField(
+                    title: "Phone number",
+                    controller: phoneNumberController,
+                    hintText: "+998 77 777 77 77",
+                  ),
+                  CustomTextField(
                     title: "Password",
-                    controller: fullNameController,
+                    controller: passwordController,
                     hintText: "●●●●●●●●●●●●",
                     isPassword: true,
                   ),
                   CustomTextField(
                     title: "Password Confirm",
-                    controller: fullNameController,
+                    controller: passwordConfirmController,
                     hintText: "●●●●●●●●●●●●",
                     isPassword: true,
                   ),
@@ -163,7 +175,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Padding(
               padding: EdgeInsets.only(
                   bottom: 36.h, right: 24.w, left: 24.w, top: 24.h),
-              child: CustomButton(text: "Continue", onTap: () {}),
+              child:
+                  BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+                return state.status == AuthStatus.loading
+                    ? Center(
+                        child: SizedBox(
+                          height: 48.h,
+                          child: Center(
+                            child: Lottie.asset(
+                              AppLotties.splashLoading,
+                            ),
+                          ),
+                        ),
+                      )
+                    : CustomButton(
+                        text: "Continue",
+                        onTap: () {
+                          context.read<AuthBloc>().add(
+                                RegisterEvent(
+                                  UserModel(
+                                    id: '111',
+                                    age: int.tryParse(ageNameController.text) ??
+                                        10,
+                                    fullName: fullNameController.text,
+                                    email: emailController.text,
+                                    phoneNumber: phoneNumberController.text,
+                                    username: userNameController.text,
+                                    userStatus: widget.status,
+                                    birthday: DateTime
+                                        .now(), // DateTime.parse(dateOfBirthController.text),
+
+                                    createdAt: DateTime.now(),
+                                  ),
+                                  passwordController.text,
+                                ),
+                              );
+                        });
+              }),
             ),
           ),
         ],
