@@ -104,4 +104,5 @@ class AppIcons {
   static const String volumeUp = "assets/icons/Bold/Volume Up.svg";
   static const String wallet = "assets/icons/Bold/Wallet.svg";
   static const String work = "assets/icons/Bold/Work.svg";
+  static const String google = "assets/icons/google.png";
 }
