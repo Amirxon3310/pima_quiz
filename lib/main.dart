@@ -1,20 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pima_quiz/features/auth/presentation/pages/splash_screen.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(430, 932),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => AuthBloc()),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: const SplashScreen(),
+            builder: (context, widget) {
+              ScreenUtil.init(context);
+              return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: widget!,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
