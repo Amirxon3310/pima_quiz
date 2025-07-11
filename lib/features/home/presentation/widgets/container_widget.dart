@@ -32,7 +32,7 @@ class ContainerWidget extends StatelessWidget {
               topRight: Radius.circular(16.r),
             ),
             child: Image.network(
-              "https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg?semt=ais_hybrid&w=740",
+              image,
               width: double.infinity,
               height: 140.h,
               fit: BoxFit.cover,

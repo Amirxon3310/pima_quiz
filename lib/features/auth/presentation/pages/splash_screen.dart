@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/on_boarding.dart';
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff181A20),
+      backgroundColor: AppColors.dark1,
       body: Stack(
         children: [
           Center(
@@ -48,6 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text(
                   "Quizzo",
                   style: TextStyle(
+                    fontFamily: "Nunito",
                     fontSize: 48.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,

@@ -7,6 +7,9 @@ environment:
   sdk: ^3.6.1
 
 dependencies:
+  cloud_firestore: ^5.6.11
+  firebase_auth: ^5.6.2
+  firebase_core: ^3.15.1
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
@@ -29,6 +32,7 @@ flutter:
     - lib/core/assets/icons/Bold/
     - assets/images/
     - assets/lotties/
+    - assets/icons/
 
   fonts: 
     - family: Nunito
@@ -41,6 +45,3 @@ flutter:
           weight: 600
         - asset: "lib/core/assets/fonts/Nunito-Bold.ttf"
           weight: 700
-
-  
-    

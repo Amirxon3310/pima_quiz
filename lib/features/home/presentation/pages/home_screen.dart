@@ -1,11 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_event.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_state.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_state.dart';
 import 'package:pima_quiz/features/home/presentation/pages/news_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/top_users_screen.dart';
 import 'package:pima_quiz/features/home/presentation/widgets/category_widget.dart';
@@ -23,29 +31,18 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   late Timer _timer;
 
-  final List<String> _images = [
-    "assets/images/purple_banner.png",
-    "assets/images/blue_banner.png",
-    "assets/images/green_banner.png",
-    "assets/images/red_banner.png",
-  ];
-
-  final List<String> _titles = [
-    "Qiziqarli testlarni yeching",
-    "Mantiqiy testlarni yeching",
-    "Matematikadan bilimlarizni sinab ko'ring",
-    "Quizzo ilovasi bilan tez va oson",
-  ];
-
   @override
   void initState() {
     super.initState();
+
+    BlocProvider.of<BannersBloc>(context).add(LoadBannersEvent());
+    BlocProvider.of<NewsBloc>(context).add(LoadNewsEvent());
 
     _timer = Timer.periodic(
       const Duration(seconds: 10),
       (timer) {
         setState(() {
-          _currentIndex = (_currentIndex + 1) % _images.length;
+          _currentIndex = (_currentIndex + 1);
         });
       },
     );
@@ -63,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.dark1,
       appBar: AppBar(
         backgroundColor: AppColors.dark1,
+        surfaceTintColor: AppColors.dark1,
         centerTitle: false,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
@@ -101,53 +99,69 @@ class _HomeScreenState extends State<HomeScreen> {
           clipBehavior: Clip.none,
           child: Column(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16.r),
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      _images[_currentIndex],
-                      width: double.infinity,
-                      height: 160.h,
-                      fit: BoxFit.cover,
-                    ),
-                    Positioned.fill(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 12.h,
-                        ),
-                        alignment: Alignment.centerLeft,
-                        color: Colors.black.withOpacity(0.3),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 220.w,
-                              child: Text(
-                                _titles[_currentIndex],
-                                style: AppTextstyles.h6w600s18.copyWith(
-                                  color: Colors.white,
-                                ),
-                                maxLines: 3,
+              BlocBuilder<BannersBloc, BannersState>(
+                builder: (context, state) {
+                  if (state is BannersLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is BannersLoaded) {
+                    final banners = state.banners;
+                    final index = _currentIndex % banners.length;
+
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(16.r),
+                      child: Stack(
+                        children: [
+                          Image(
+                            width: double.infinity,
+                            height: 160.h,
+                            fit: BoxFit.cover,
+                            image: banners[index].url.isNotEmpty
+                                ? NetworkImage(banners[index].url)
+                                : AssetImage("assets/images/purple_banner.png")
+                                    as ImageProvider,
+                          ),
+                          Positioned.fill(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w, vertical: 12.h),
+                              alignment: Alignment.centerLeft,
+                              color: Colors.black.withOpacity(0.3),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 220.w,
+                                    child: Text(
+                                      banners[index].title,
+                                      style: AppTextstyles.h6w600s18.copyWith(
+                                        color: Colors.white,
+                                      ),
+                                      maxLines: 3,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        foregroundColor: Colors.black,
+                                        padding: EdgeInsets.all(10)),
+                                    child: const Text("Start"),
+                                  ),
+                                ],
                               ),
                             ),
-                            SizedBox(height: 10.h),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.black,
-                                  padding: EdgeInsets.all(10)),
-                              child: const Text("Start"),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
+                    );
+                  } else if (state is BannersError) {
+                    return Text("Xatolik: ${state.message}");
+                  } else {
+                    return const SizedBox();
+                  }
+                },
               ),
               SizedBox(height: 24.h),
               ViewAllWidget(
@@ -161,23 +175,44 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }),
               SizedBox(height: 16.h),
-              SizedBox(
-                height: 260.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.none,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ContainerWidget(
-                      image: "image",
-                      title: "Get Smarter with Productivity Quizz...",
-                      authorName: "Titus Kitamura",
+              BlocBuilder<NewsBloc, NewsState>(
+                builder: (context, state) {
+                  if (state is NewsLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: 16.w);
-                  },
-                ),
+                  } else if (state is NewsLoaded) {
+                    final newsList = state.newsList;
+
+                    return SizedBox(
+                      height: 260.h,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        clipBehavior: Clip.none,
+                        itemCount: newsList.length,
+                        itemBuilder: (context, index) {
+                          final news = newsList[index];
+                          return ContainerWidget(
+                            image: news.url.isNotEmpty
+                                ? news.url
+                                : AppConstants.errorImage,
+                            title: news.title,
+                            authorName: news.authorName,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(width: 16.w);
+                        },
+                      ),
+                    );
+                  } else if (state is NewsError) {
+                    return Center(
+                      child: Text("Xatolik: ${state.message}"),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
               ),
               SizedBox(height: 24.h),
               ViewAllWidget(
@@ -250,7 +285,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: 10,
                   itemBuilder: (context, index) {
                     return ContainerWidget(
-                      image: "image",
+                      image:
+                          "https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg?semt=ais_hybrid&w=740",
                       title: "Get Smarter with Productivity Quizz...",
                       authorName: "Titus Kitamura",
                     );
@@ -273,7 +309,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: 10,
                   itemBuilder: (context, index) {
                     return ContainerWidget(
-                      image: "image",
+                      image:
+                          "https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg?semt=ais_hybrid&w=740",
                       title: "Get Smarter with Productivity Quizz...",
                       authorName: "Titus Kitamura",
                     );

@@ -118,4 +118,5 @@ class AppIcons {
   static const String volumeUp = "lib/core/assets/icons/Bold/Volume Up.svg";
   static const String wallet = "lib/core/assets/icons/Bold/Wallet.svg";
   static const String work = "lib/core/assets/icons/Bold/Work.svg";
+  static const String google = "lib/core/assets/icons/google.png";
 }

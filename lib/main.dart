@@ -1,11 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/features/auth/data/datasource/auth_datasource_impl.dart';
+import 'package:pima_quiz/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/splash_screen.dart';
+import 'package:pima_quiz/features/home/data/datasources/banners_remote_datasource.dart';
+import 'package:pima_quiz/features/home/data/datasources/news_remote_datasource.dart';
+import 'package:pima_quiz/features/home/data/repositories/banners_repository_impl.dart';
+import 'package:pima_quiz/features/home/data/repositories/news_repository_impl.dart';
+import 'package:pima_quiz/features/home/domain/usecases/get_banners_usecase.dart';
+import 'package:pima_quiz/features/home/domain/usecases/get_news_usecase.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_event.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,17 +30,44 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(430, 932),
+      designSize: Size(430, 932),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => AuthBloc()),
+            BlocProvider(
+              create: (context) => AuthBloc(
+                repository: AuthRepositoryImpl(
+                  AuthDataSourceImpl(
+                    firebaseAuth: FirebaseAuth.instance,
+                    firestore: FirebaseFirestore.instance,
+                  ),
+                ),
+              ),
+            ),
+            BlocProvider(
+              create: (_) => BannersBloc(
+                GetBannersUseCase(
+                  BannersRepositoryImpl(
+                    BannersRemoteDatasourceImpl(FirebaseFirestore.instance),
+                  ),
+                ),
+              )..add(LoadBannersEvent()),
+            ),
+            BlocProvider(
+              create: (_) => NewsBloc(
+                GetNewsUseCase(
+                  NewsRepositoryImpl(
+                    NewsRemoteDatasourceImpl(FirebaseFirestore.instance),
+                  ),
+                ),
+              ),
+            )
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: const SplashScreen(),
+            home: SplashScreen(), // Splash screen ga o'zgartirishim kerak!
             builder: (context, widget) {
               ScreenUtil.init(context);
               return MediaQuery(
