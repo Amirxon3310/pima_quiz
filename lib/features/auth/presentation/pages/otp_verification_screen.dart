@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/create_new_password_screen.dart';
+import 'package:pinput/pinput.dart';
 
-class OtpVerificationScreen extends StatelessWidget {
+class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
+
+  @override
+  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+}
+
+class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  final defaultPinTheme = PinTheme(
+    width: 64.w,
+    height: 64.w,
+    textStyle: TextStyle(fontSize: 24.sp, color: Colors.white),
+    decoration: BoxDecoration(
+      color: AppColors.dark4,
+      borderRadius: BorderRadius.circular(12.r),
+    ),
+  );
+
+  @override
+  void didChangeDependencies() {
+    context.read<AuthBloc>().add(StartCountdown());
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,44 +63,51 @@ class OtpVerificationScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 32.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                4,
-                (index) => Container(
-                  width: 64.w,
-                  height: 64.w,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: Text(
-                    '*',
-                    style: TextStyle(fontSize: 24.sp, color: Colors.white),
-                  ),
+            Pinput(
+              length: 4,
+              defaultPinTheme: defaultPinTheme,
+              focusedPinTheme: defaultPinTheme.copyWith(
+                decoration: defaultPinTheme.decoration!.copyWith(
+                  border: Border.all(color: Colors.white, width: 2),
                 ),
               ),
+              submittedPinTheme: defaultPinTheme,
+              showCursor: true,
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                context.read<AuthBloc>().add(ChangeOtp(value: value));
+              },
             ),
             SizedBox(height: 24.h),
-            Text(
-              "Didn’t receive email?\nYou can resend code in 55 s",
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontFamily: 'Nunito',
-                color: Colors.white70,
-              ),
-              textAlign: TextAlign.center,
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                return Text(
+                  "Didn’t receive email ?\nYou can resend code in ${state.countdown} s",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontFamily: 'Nunito',
+                    color: Colors.white70,
+                  ),
+                  textAlign: TextAlign.center,
+                );
+              },
             ),
             Spacer(),
-            CustomButton(
-              text: "Confirm",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CreateNewPasswordScreen(),
-                  ),
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                return CustomButton(
+                  isFilled: state.otp.length == 4,
+                  text: "Confirm",
+                  onTap: state.otp.length == 4 && state.countdown > 0
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateNewPasswordScreen(),
+                            ),
+                          );
+                        }
+                      : () {},
                 );
               },
             ),

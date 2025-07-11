@@ -63,7 +63,7 @@ class _NewsScreenState extends State<NewsScreen> {
               spacing: 16.w,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadiusGeometry.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12.r),
                     bottomLeft: Radius.circular(12.r),
                   ),

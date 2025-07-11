@@ -27,7 +27,7 @@ class ContainerWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ClipRRect(
-            borderRadius: BorderRadiusGeometry.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.r),
               topRight: Radius.circular(16.r),
             ),
