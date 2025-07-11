@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +8,16 @@ import 'package:pima_quiz/features/auth/data/datasource/auth_datasource_impl.dar
 import 'package:pima_quiz/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/splash_screen.dart';
+import 'package:pima_quiz/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // FirebaseFirestore.instance.settings = const Settings(
+  //   persistenceEnabled: true,
+  // );
   runApp(MyApp());
 }
 
@@ -32,7 +38,7 @@ class MyApp extends StatelessWidget {
                 repository: AuthRepositoryImpl(
                   AuthDataSourceImpl(
                     firebaseAuth: FirebaseAuth.instance,
-                    firestore: FirebaseFirestore.instance,
+                    // firestore: FirebaseFirestore.instance,
                   ),
                 ),
               ),
