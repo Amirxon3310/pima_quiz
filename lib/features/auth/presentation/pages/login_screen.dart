@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        AppIcons.google,
+                        AppIcons.heart,
                         height: 20.h,
                       ),
                       SizedBox(width: 10.w),

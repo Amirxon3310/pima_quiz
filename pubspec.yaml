@@ -32,7 +32,10 @@ flutter:
     - lib/core/assets/icons/Bold/
     - assets/images/
     - assets/lotties/
+<<<<<<< HEAD
     - assets/icons/
+=======
+>>>>>>> origin/nodir
 
   fonts: 
     - family: Nunito
@@ -44,4 +47,11 @@ flutter:
         - asset: "lib/core/assets/fonts/Nunito-SemiBold.ttf"
           weight: 600
         - asset: "lib/core/assets/fonts/Nunito-Bold.ttf"
+<<<<<<< HEAD
           weight: 700
+=======
+          weight: 700
+
+  
+    
+>>>>>>> origin/nodir
