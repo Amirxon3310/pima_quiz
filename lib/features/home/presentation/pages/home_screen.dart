@@ -11,6 +11,7 @@ import 'package:pima_quiz/features/home/presentation/pages/top_users_screen.dart
 import 'package:pima_quiz/features/home/presentation/widgets/category_widget.dart';
 import 'package:pima_quiz/features/home/presentation/widgets/container_widget.dart';
 import 'package:pima_quiz/features/home/presentation/widgets/view_all_widget.dart';
+import 'package:pima_quiz/features/profile/presentation/pages/profile_settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -85,12 +86,22 @@ class _HomeScreenState extends State<HomeScreen> {
             color: AppColors.white,
           ),
           SizedBox(width: 20.w),
-          SvgPicture.asset(
-            AppIcons.notification,
-            width: 28.w,
-            height: 28.h,
-            fit: BoxFit.scaleDown,
-            color: AppColors.white,
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileSettingsScreen(),
+                ),
+              );
+            },
+            child: SvgPicture.asset(
+              AppIcons.notification,
+              width: 28.w,
+              height: 28.h,
+              fit: BoxFit.scaleDown,
+              color: AppColors.white,
+            ),
           ),
           SizedBox(width: 24.w),
         ],
