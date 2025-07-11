@@ -5,6 +5,8 @@ import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/login_screen.dart';
+import 'package:pima_quiz/features/profile/presentation/pages/music_and_effects_screen.dart';
+import 'package:pima_quiz/features/profile/presentation/pages/securitt_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/personal_info_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/widgets/settings_widget.dart';
 
@@ -104,13 +106,27 @@ class ProfileSettingsScreen extends StatelessWidget {
                   color: AppColors.transparentOrange,
                 ),
                 SettingsWidget(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MusicAndEffectsScreen(),
+                      ),
+                    );
+                  },
                   title: 'Music & Effects',
                   icon: AppIcons.volumeUp,
                   color: AppColors.transparentPurple,
                 ),
                 SettingsWidget(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SecurityScreen(),
+                      ),
+                    );
+                  },
                   title: 'Security',
                   icon: AppIcons.shieldDone,
                   color: AppColors.transparentGreen,

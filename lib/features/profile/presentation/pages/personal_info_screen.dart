@@ -5,6 +5,7 @@ import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
+import 'package:pima_quiz/core/widgets/custom_datetime_picker.dart';
 import 'package:pima_quiz/core/widgets/custom_textfield.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
@@ -17,12 +18,13 @@ class PersonalInfoScreen extends StatefulWidget {
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   final fullNameController = TextEditingController();
   final userNameController = TextEditingController();
-  final dateOfBirthController = TextEditingController();
   final emailController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final ageNameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
+
+  DateTime? dateOfBirth;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,12 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        leading: Icon(Icons.arrow_back, color: Colors.white, size: 24.sp),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: Colors.white, size: 24.sp),
+        ),
         title: Text(
           'Personal Info',
           style: TextStyle(
@@ -68,7 +75,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsGeometry.only(bottom: 10),
+                        padding: EdgeInsets.only(bottom: 10),
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: SizedBox(
@@ -108,8 +115,15 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 ),
                 CustomTextField(
                   title: "Date of Birth",
-                  controller: dateOfBirthController,
                   hintText: "12/27/1995",
+                  onTap: () async {
+                    DateTime? selectedDateTime =
+                        await CustomDatetimePicker.pickDateTime(context);
+                    if (selectedDateTime != null) {
+                      print('Tanlangan sana va vaqt: $selectedDateTime');
+                      dateOfBirth = selectedDateTime;
+                    }
+                  },
                 ),
                 CustomTextField(
                   title: "age",
