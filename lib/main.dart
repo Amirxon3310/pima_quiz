@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
+            home: SplashScreen(), // Splash screen ga o'zgartirishim kerak!
             builder: (context, widget) {
               ScreenUtil.init(context);
               return MediaQuery(
