@@ -1,10 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
+import 'package:pima_quiz/core/widgets/custom_button.dart';
+import 'package:pima_quiz/core/widgets/custom_modal_sheet.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/login_screen.dart';
+import 'package:pima_quiz/features/profile/presentation/pages/help_center_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/music_and_effects_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/securitt_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/personal_info_screen.dart';
@@ -15,6 +19,7 @@ class ProfileSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Profile: ${FirebaseAuth.instance.currentUser?.uid}");
     return Scaffold(
       backgroundColor: AppColors.dark1,
       appBar: AppBar(
@@ -138,7 +143,14 @@ class ProfileSettingsScreen extends StatelessWidget {
                   color: AppColors.transparentBlue,
                 ),
                 SettingsWidget(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HelpCenterScreen(),
+                      ),
+                    );
+                  },
                   title: 'Help center',
                   icon: AppIcons.paper,
                   color: AppColors.transparentOrange,
@@ -151,12 +163,53 @@ class ProfileSettingsScreen extends StatelessWidget {
                 ),
                 SettingsWidget(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ),
-                    );
+                    customBottomSheet(
+                        context: context,
+                        title: "Logout",
+                        colorTitle: AppColors.error,
+                        content: Column(
+                          spacing: 20.h,
+                          children: [
+                            Text(
+                              "Are you sure you want to log out?",
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Nunito",
+                                color: Colors.white,
+                              ),
+                            ),
+                            Row(
+                              spacing: 12.w,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: CustomButton(
+                                    text: "Cancel",
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    isFilled: false,
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: CustomButton(
+                                    text: "Yes, logout",
+                                    onTap: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LoginScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ));
                   },
                   title: 'Logout',
                   icon: AppIcons.logout,

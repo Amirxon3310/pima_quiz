@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
-import 'package:pima_quiz/features/profile/presentation/widgets/music_effect_widget.dart';
+import 'package:pima_quiz/core/resources/app_icons.dart';
+import 'package:pima_quiz/features/profile/presentation/widgets/help_center_widget.dart';
 
-class MusicAndEffectsScreen extends StatefulWidget {
-  const MusicAndEffectsScreen({super.key});
+class HelpCenterScreen extends StatefulWidget {
+  const HelpCenterScreen({super.key});
 
   @override
-  State<MusicAndEffectsScreen> createState() => _MusicAndEffectsScreenState();
+  State<HelpCenterScreen> createState() => _HelpCenterScreenState();
 }
 
-class _MusicAndEffectsScreenState extends State<MusicAndEffectsScreen> {
-  bool isSwitched = true;
+class _HelpCenterScreenState extends State<HelpCenterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class _MusicAndEffectsScreenState extends State<MusicAndEffectsScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.white, size: 24.sp),
         ),
         title: Text(
-          'Music & Effects',
+          'Help center',
           style: TextStyle(
             fontSize: 20.sp,
             fontFamily: 'Nunito',
@@ -37,26 +37,16 @@ class _MusicAndEffectsScreenState extends State<MusicAndEffectsScreen> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(
-          left: 24.w,
-          right: 24.w,
-          top: 16.h,
-        ),
+        padding: EdgeInsets.all(24.w),
         child: Column(
-          spacing: 24.h,
+          spacing: 20.h,
           children: [
-            MusicEffectSwitch(
-              title: "Biometric ID",
-            ),
-            MusicEffectSwitch(
-              title: "Face ID",
-            ),
-            MusicEffectSwitch(
-              title: "SMS Authenticator",
-            ),
-            MusicEffectSwitch(
-              title: "Google Authenticator",
-            ),
+            HelpCenterWidget(icon: AppIcons.message, title: "Custom Service"),
+            HelpCenterWidget(icon: AppIcons.message, title: "WhatsApp"),
+            HelpCenterWidget(icon: AppIcons.message, title: "Website"),
+            HelpCenterWidget(icon: AppIcons.message, title: "Facebook"),
+            HelpCenterWidget(icon: AppIcons.message, title: "Twitter"),
+            HelpCenterWidget(icon: AppIcons.message, title: "Instagram"),
           ],
         ),
       ),

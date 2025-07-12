@@ -15,6 +15,7 @@ class UserModel {
   final DateTime? birthday;
   final UserStatus? userStatus;
   final DateTime createdAt;
+  final String? image;
 
   UserModel({
     required this.id,
@@ -26,6 +27,7 @@ class UserModel {
     this.userStatus,
     this.birthday,
     required this.createdAt,
+    this.image,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) {
@@ -36,9 +38,10 @@ class UserModel {
       email: json['email'],
       phoneNumber: json['phone'],
       username: json['username'],
-      userStatus: json['status'],
-      birthday: json['birthday'],
+      // userStatus:  json['status'],
+      birthday: DateTime.parse(json['birthday']),
       createdAt: json['createdAt'],
+      image: json['image'],
     );
   }
 
@@ -53,6 +56,7 @@ class UserModel {
       'status': userStatus?.name,
       'birthday': birthday?.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),
+      'image': image
     };
   }
 }
