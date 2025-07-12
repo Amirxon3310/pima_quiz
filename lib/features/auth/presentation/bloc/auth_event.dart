@@ -20,3 +20,11 @@ class RegisterEvent extends AuthEvent {
 
   RegisterEvent(this.user, this.password);
 }
+
+class ChangeOtp extends AuthEvent {
+  final String value;
+
+  ChangeOtp({required this.value});
+}
+
+class StartCountdown extends AuthEvent {}

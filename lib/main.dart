@@ -21,16 +21,18 @@ import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
+import 'package:pima_quiz/features/profile/data/datasource/profile_datasource_impl.dart';
+import 'package:pima_quiz/features/profile/data/repository/profile_respository_impl.dart';
+import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:pima_quiz/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
   );
-  // FirebaseFirestore.instance.settings = const Settings(
-  //   persistenceEnabled: true,
-  // );
+
   runApp(MyApp());
 }
 
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Main: ${FirebaseAuth.instance.currentUser?.uid}");
     return ScreenUtilInit(
       designSize: Size(430, 932),
       minTextAdapt: true,
@@ -51,8 +54,16 @@ class MyApp extends StatelessWidget {
                 repository: AuthRepositoryImpl(
                   AuthDataSourceImpl(
                     firebaseAuth: FirebaseAuth.instance,
-                    // firestore: FirebaseFirestore.instance,
+                    firestore: FirebaseFirestore.instance,
                   ),
+                ),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => ProfileBloc(
+                repository: ProfileRespositoryImpl(
+                  dataSource: ProfileDatasourceImpl(
+                      firestore: FirebaseFirestore.instance),
                 ),
               ),
             ),
@@ -86,7 +97,7 @@ class MyApp extends StatelessWidget {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: SplashScreen(), // Splash screen ga o'zgartirishim kerak!
+            home: SplashScreen(),
             builder: (context, widget) {
               ScreenUtil.init(context);
               return MediaQuery(

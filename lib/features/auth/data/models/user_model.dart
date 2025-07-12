@@ -7,25 +7,27 @@ enum UserStatus {
 
 class UserModel {
   final String id;
-  final int age;
-  final String fullName;
+  final int? age;
+  final String? fullName;
   final String email;
-  final String phoneNumber;
-  final String username;
-  final DateTime birthday;
+  final String? phoneNumber;
+  final String? username;
+  final DateTime? birthday;
   final UserStatus? userStatus;
   final DateTime createdAt;
+  final String? image;
 
   UserModel({
     required this.id,
-    required this.age,
-    required this.fullName,
+    this.age,
+    this.fullName,
     required this.email,
-    required this.phoneNumber,
-    required this.username,
+    this.phoneNumber,
+    this.username,
     this.userStatus,
-    required this.birthday,
+    this.birthday,
     required this.createdAt,
+    this.image,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) {
@@ -36,9 +38,10 @@ class UserModel {
       email: json['email'],
       phoneNumber: json['phone'],
       username: json['username'],
-      userStatus: json['status'],
-      birthday: json['birthday'],
+      // userStatus:  json['status'],
+      birthday: DateTime.parse(json['birthday']),
       createdAt: json['createdAt'],
+      image: json['image'],
     );
   }
 
@@ -51,8 +54,9 @@ class UserModel {
       'phone': phoneNumber,
       'username': username,
       'status': userStatus?.name,
-      'birthday': birthday.toIso8601String(),
+      'birthday': birthday?.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),
+      'image': image
     };
   }
 }

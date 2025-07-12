@@ -7,12 +7,13 @@ import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
+import 'package:pima_quiz/core/widgets/custom_datetime_picker.dart';
 import 'package:pima_quiz/core/widgets/custom_textfield.dart';
 import 'package:pima_quiz/features/auth/data/models/user_model.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
-import 'package:pima_quiz/features/home/presentation/pages/home_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final UserStatus? status;
@@ -25,12 +26,13 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final fullNameController = TextEditingController();
   final userNameController = TextEditingController();
-  final dateOfBirthController = TextEditingController();
   final emailController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final ageNameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
+
+  DateTime? dateOfBirth;
 
   final key = GlobalKey<FormState>();
 
@@ -131,8 +133,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       title: "Date of Birth",
-                      controller: dateOfBirthController,
                       hintText: "12/27/1995",
+                      onTap: () async {
+                        DateTime? selectedDateTime =
+                            await CustomDatetimePicker.pickDateTime(context);
+                        if (selectedDateTime != null) {
+                          dateOfBirth = selectedDateTime;
+                          print(selectedDateTime);
+                        }
+                      },
                     ),
                     CustomTextField(
                       title: "Email",
@@ -221,7 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   if (state.status == AuthStatus.success) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => HomeScreen()),
+                      MaterialPageRoute(builder: (_) => MainScreen()),
                     );
                   }
                 },
@@ -265,8 +274,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   phoneNumberController.text,
                                               username: userNameController.text,
                                               userStatus: widget.status,
-                                              birthday: DateTime
-                                                  .now(), // DateTime.parse(dateOfBirthController.text),
+                                              birthday: dateOfBirth,
                                               createdAt: DateTime.now(),
                                             ),
                                             passwordController.text,

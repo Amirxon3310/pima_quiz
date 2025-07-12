@@ -1,12 +1,12 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pima_quiz/features/auth/data/models/user_model.dart';
 import 'auth_datasource.dart';
 
 class AuthDataSourceImpl implements AuthDataSource {
   final FirebaseAuth firebaseAuth;
-  // final FirebaseFirestore firestore;
-  AuthDataSourceImpl({required this.firebaseAuth});
+  final FirebaseFirestore firestore;
+  AuthDataSourceImpl({required this.firestore, required this.firebaseAuth});
 
   @override
   Future<void> register({
@@ -19,8 +19,8 @@ class AuthDataSourceImpl implements AuthDataSource {
         email: user.email,
         password: password,
       );
-      // final uid = userCredential.user!.uid;
-      // await firestore.collection('users').doc(uid).set(user.toMap(uid));
+      final uid = userCredential.user!.uid;
+      await firestore.collection('users').doc(uid).set(user.toMap(uid));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         print('Bu email allaqachon ro‘yxatdan o‘tgan.');

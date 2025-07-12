@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/core/widgets/custom_textfield.dart';
-import 'package:pima_quiz/features/home/presentation/pages/home_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class CreateNewPasswordScreen extends StatefulWidget {
   const CreateNewPasswordScreen({super.key});
@@ -83,7 +83,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => MainScreen(),
                   ),
                 );
               },

@@ -13,7 +13,7 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadiusGeometry.circular(16.r),
+      borderRadius: BorderRadius.circular(16.r),
       child: Stack(
         children: [
           Image.network(

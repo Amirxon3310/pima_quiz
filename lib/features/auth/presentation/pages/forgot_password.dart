@@ -14,6 +14,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final controller = TextEditingController();
+  final key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,21 +47,37 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
             SizedBox(height: 32.h),
             SizedBox(height: 8.h),
-            CustomTextField(
-              controller: controller,
-              title: "Email",
-              hintText: 'andrew.ainsley@yourdomain.com',
+            Form(
+              key: key,
+              child: CustomTextField(
+                controller: controller,
+                title: "Email",
+                hintText: 'andrew.ainsley@yourdomain.com',
+                validator: (v) {
+                  if (v == null || v.isEmpty) {
+                    return 'Email manzilingizni kiriting';
+                  }
+                  final emailRegex =
+                      RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                  if (!emailRegex.hasMatch(v)) {
+                    return 'To‘g‘ri email manzil kiriting';
+                  }
+                  return null;
+                },
+              ),
             ),
             Spacer(),
             CustomButton(
               text: "Continue",
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OtpVerificationScreen(),
-                  ),
-                );
+                if (key.currentState!.validate()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OtpVerificationScreen(),
+                    ),
+                  );
+                }
               },
             ),
             SizedBox(height: 24.h),
