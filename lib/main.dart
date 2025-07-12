@@ -63,7 +63,9 @@ class MyApp extends StatelessWidget {
               create: (context) => ProfileBloc(
                 repository: ProfileRespositoryImpl(
                   dataSource: ProfileDatasourceImpl(
-                      firestore: FirebaseFirestore.instance),
+                    firebaseAuth: FirebaseAuth.instance,
+                    firestore: FirebaseFirestore.instance,
+                  ),
                 ),
               ),
             ),

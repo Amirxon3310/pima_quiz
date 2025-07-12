@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +7,7 @@ import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/widgets/custom_datetime_picker.dart';
+import 'package:pima_quiz/core/widgets/custom_datetime_widget.dart';
 import 'package:pima_quiz/core/widgets/custom_textfield.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_event.dart';
@@ -23,9 +23,7 @@ class PersonalInfoScreen extends StatefulWidget {
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   @override
   void didChangeDependencies() {
-    context
-        .read<ProfileBloc>()
-        .add(GetUserByIdEvent(FirebaseAuth.instance.currentUser!.uid));
+    context.read<ProfileBloc>().add(GetUserByIdEvent());
     super.didChangeDependencies();
   }
 
@@ -78,6 +76,11 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
             );
           }
           emailController.text = state.user?.email ?? "";
+          fullNameController.text = state.user?.fullName ?? "";
+          phoneNumberController.text = state.user?.phoneNumber ?? "";
+          dateOfBirth = state.user?.birthday;
+          ageNameController.text = state.user?.age.toString() ?? "";
+          print("KELDI ANU KELDI: ${state.user?.birthday}");
           return Center(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -95,9 +98,13 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             height: double.infinity,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(
-                                  AppImages.personalInfoAvatar,
-                                ),
+                                image: (state.user?.image != null &&
+                                        state.user!.image!.isNotEmpty)
+                                    ? NetworkImage(state.user!.image!)
+                                        as ImageProvider
+                                    : AssetImage(AppImages.personalInfoAvatar)
+                                        as ImageProvider,
+                                fit: BoxFit.cover,
                               ),
                               shape: BoxShape.circle,
                               color: Colors.white,
@@ -142,15 +149,18 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       controller: phoneNumberController,
                       hintText: "+1-300-555-0399",
                     ),
-                    CustomTextField(
+                    CustomDatetimeWidget(
                       title: "Date of Birth",
-                      hintText: "12/27/1995",
+                      valueText: dateOfBirth,
                       onTap: () async {
                         DateTime? selectedDateTime =
                             await CustomDatetimePicker.pickDateTime(context);
                         if (selectedDateTime != null) {
-                          print('Tanlangan sana va vaqt: $selectedDateTime');
-                          dateOfBirth = selectedDateTime;
+                          if (context.mounted) {
+                            context
+                                .read<ProfileBloc>()
+                                .add(EditUserDateOfBirhtday(selectedDateTime));
+                          }
                         }
                       },
                     ),

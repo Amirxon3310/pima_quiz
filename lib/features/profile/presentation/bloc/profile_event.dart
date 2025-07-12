@@ -1,7 +1,10 @@
 abstract class ProfileEvent {}
 
 class GetUserByIdEvent extends ProfileEvent {
-  final String userId;
+  GetUserByIdEvent();
+}
 
-  GetUserByIdEvent(this.userId);
+class EditUserDateOfBirhtday extends ProfileEvent {
+  final DateTime newDate;
+  EditUserDateOfBirhtday(this.newDate);
 }

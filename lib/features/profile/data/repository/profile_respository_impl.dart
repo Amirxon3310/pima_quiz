@@ -8,7 +8,12 @@ class ProfileRespositoryImpl implements ProfileRepository {
   ProfileRespositoryImpl({required this.dataSource});
 
   @override
-  Future<UserModel> getUserById(String userId) {
-    return dataSource.getUserById(userId);
+  Future<UserModel?> getUserById() {
+    return dataSource.getUserById();
+  }
+
+  @override
+  Future<bool> editUserDateOfBirthday({required DateTime newDate}) {
+    return dataSource.editUserDateOfBirthday(newDate: newDate);
   }
 }

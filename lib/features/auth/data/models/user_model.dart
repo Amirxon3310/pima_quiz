@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 enum UserStatus {
   teacher,
   stduent,
@@ -38,9 +40,11 @@ class UserModel {
       email: json['email'],
       phoneNumber: json['phone'],
       username: json['username'],
-      // userStatus:  json['status'],
-      birthday: DateTime.parse(json['birthday']),
-      createdAt: json['createdAt'],
+      userStatus: UserModel.parseUserStatus(json['status']),
+      birthday: json['birthday'] != null
+          ? (json['birthday'] as Timestamp).toDate()
+          : null,
+      createdAt: DateTime.parse(json['createdAt']),
       image: json['image'],
     );
   }
@@ -54,9 +58,18 @@ class UserModel {
       'phone': phoneNumber,
       'username': username,
       'status': userStatus?.name,
-      'birthday': birthday?.toIso8601String(),
-      'createdAt': createdAt.toIso8601String(),
+      'birthday': birthday != null ? Timestamp.fromDate(birthday!) : null,
+      'createdAt': Timestamp.fromDate(createdAt),
       'image': image
     };
+  }
+
+  static UserStatus? parseUserStatus(String? status) {
+    if (status == null) return null;
+    try {
+      return UserStatus.values.firstWhere((e) => e.name == status);
+    } catch (e) {
+      return null;
+    }
   }
 }
