@@ -25,7 +25,12 @@ class ProfileSettingsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Icon(Icons.arrow_back, color: Colors.white, size: 24.sp),
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back, color: Colors.white, size: 24.sp),
+        ),
         centerTitle: false,
         title: Text(
           'Settings',

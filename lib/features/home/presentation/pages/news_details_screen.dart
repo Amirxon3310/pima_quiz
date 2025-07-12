@@ -61,7 +61,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(16.r),
+              borderRadius: BorderRadius.circular(16.r),
               child: Image.network(
                 widget.news.url.isNotEmpty
                     ? widget.news.url

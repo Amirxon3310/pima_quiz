@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
       body: screens[_currentIndex],
       bottomNavigationBar: ClipRRect(
         // clipBehavior: Clip.none,
-        borderRadius: BorderRadiusGeometry.only(
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24.r),
           topRight: Radius.circular(24.r),
         ),

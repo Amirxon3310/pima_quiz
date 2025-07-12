@@ -11,7 +11,7 @@ import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/forgot_password.dart';
-import 'package:pima_quiz/features/home/presentation/pages/home_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (state.status == AuthStatus.success) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (_) => HomeScreen()),
+                        MaterialPageRoute(builder: (_) => MainScreen()),
                       );
                     }
                   },

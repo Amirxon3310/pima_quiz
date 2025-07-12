@@ -13,7 +13,7 @@ import 'package:pima_quiz/features/auth/data/models/user_model.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
-import 'package:pima_quiz/features/home/presentation/pages/home_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final UserStatus? status;
@@ -230,7 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   if (state.status == AuthStatus.success) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => HomeScreen()),
+                      MaterialPageRoute(builder: (_) => MainScreen()),
                     );
                   }
                 },
