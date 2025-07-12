@@ -14,6 +14,7 @@ import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_state.dart';
+import 'package:pima_quiz/features/home/presentation/pages/news_details_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/news_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/top_users_screen.dart';
 import 'package:pima_quiz/features/home/presentation/widgets/category_widget.dart';
@@ -192,12 +193,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: newsList.length,
                         itemBuilder: (context, index) {
                           final news = newsList[index];
-                          return ContainerWidget(
-                            image: news.url.isNotEmpty
-                                ? news.url
-                                : AppConstants.errorImage,
-                            title: news.title,
-                            authorName: news.authorName,
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NewsDetailsScreen(
+                                    news: news,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: ContainerWidget(
+                              image: news.url.isNotEmpty
+                                  ? news.url
+                                  : AppConstants.errorImage,
+                              title: news.title,
+                              authorName: news.authorName,
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {

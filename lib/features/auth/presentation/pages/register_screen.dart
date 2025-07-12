@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -11,6 +12,7 @@ import 'package:pima_quiz/features/auth/data/models/user_model.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
+import 'package:pima_quiz/features/home/presentation/pages/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final UserStatus? status;
@@ -29,6 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final ageNameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
+
+  final key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -109,54 +113,91 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               32.height,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 24.h,
-                children: [
-                  CustomTextField(
-                    title: "Full Name",
-                    controller: fullNameController,
-                    hintText: "Andrew Ainsley",
-                  ),
-                  CustomTextField(
-                    title: "Username",
-                    controller: userNameController,
-                    hintText: "andrew_ainsley",
-                  ),
-                  CustomTextField(
-                    title: "Date of Birth",
-                    controller: dateOfBirthController,
-                    hintText: "12/27/1995",
-                  ),
-                  CustomTextField(
-                    title: "Email",
-                    controller: emailController,
-                    hintText: "andrew.ainsley@yourdomain.com",
-                  ),
-                  CustomTextField(
-                    title: "Age",
-                    controller: ageNameController,
-                    hintText: "25",
-                  ),
-                  CustomTextField(
-                    title: "Phone number",
-                    controller: phoneNumberController,
-                    hintText: "+998 77 777 77 77",
-                  ),
-                  CustomTextField(
-                    title: "Password",
-                    controller: passwordController,
-                    hintText: "●●●●●●●●●●●●",
-                    isPassword: true,
-                  ),
-                  CustomTextField(
-                    title: "Password Confirm",
-                    controller: passwordConfirmController,
-                    hintText: "●●●●●●●●●●●●",
-                    isPassword: true,
-                  ),
-                  24.height,
-                ],
+              Form(
+                key: key,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 24.h,
+                  children: [
+                    CustomTextField(
+                      title: "Full Name",
+                      controller: fullNameController,
+                      hintText: "Andrew Ainsley",
+                    ),
+                    CustomTextField(
+                      title: "Username",
+                      controller: userNameController,
+                      hintText: "andrew_ainsley",
+                    ),
+                    CustomTextField(
+                      title: "Date of Birth",
+                      controller: dateOfBirthController,
+                      hintText: "12/27/1995",
+                    ),
+                    CustomTextField(
+                      title: "Email",
+                      controller: emailController,
+                      hintText: "andrew.ainsley@yourdomain.com",
+                      validator: (v) {
+                        if (v == null || v.isEmpty) {
+                          return 'Email manzilingizni kiriting';
+                        }
+                        final emailRegex =
+                            RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                        if (!emailRegex.hasMatch(v)) {
+                          return 'To‘g‘ri email manzil kiriting';
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextField(
+                      title: "Age",
+                      controller: ageNameController,
+                      hintText: "25",
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                    ),
+                    CustomTextField(
+                      title: "Phone number",
+                      controller: phoneNumberController,
+                      hintText: "+998 77 777 77 77",
+                    ),
+                    CustomTextField(
+                      title: "Password",
+                      controller: passwordController,
+                      hintText: "●●●●●●●●●●●●",
+                      isPassword: true,
+                      validator: (v) {
+                        if (v == null || v.isEmpty) {
+                          return 'Parolni kiriting';
+                        }
+                        if (v.length < 6) {
+                          return 'Parol kamida 6 ta belgidan iborat bo‘lishi kerak';
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextField(
+                      title: "Password Confirm",
+                      controller: passwordConfirmController,
+                      hintText: "●●●●●●●●●●●●",
+                      isPassword: true,
+                      validator: (v) {
+                        if (v == null || v.isEmpty) {
+                          return 'Parolni qayta kiriting';
+                        }
+                        if (passwordController.text !=
+                            passwordConfirmController.text) {
+                          return "Parollar mos emas, Parollar bir xil bo'lishi kerak";
+                        }
+                        return null;
+                      },
+                    ),
+                    24.height,
+                  ],
+                ),
               ),
             ],
           ),
@@ -175,43 +216,70 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Padding(
               padding: EdgeInsets.only(
                   bottom: 36.h, right: 24.w, left: 24.w, top: 24.h),
-              child:
-                  BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-                return state.status == AuthStatus.loading
-                    ? Center(
-                        child: SizedBox(
-                          height: 48.h,
-                          child: Center(
-                            child: Lottie.asset(
-                              AppLotties.splashLoading,
-                            ),
-                          ),
-                        ),
-                      )
-                    : CustomButton(
-                        text: "Continue",
-                        onTap: () {
-                          context.read<AuthBloc>().add(
-                                RegisterEvent(
-                                  UserModel(
-                                    id: '111',
-                                    age: int.tryParse(ageNameController.text) ??
-                                        10,
-                                    fullName: fullNameController.text,
-                                    email: emailController.text,
-                                    phoneNumber: phoneNumberController.text,
-                                    username: userNameController.text,
-                                    userStatus: widget.status,
-                                    birthday: DateTime
-                                        .now(), // DateTime.parse(dateOfBirthController.text),
-
-                                    createdAt: DateTime.now(),
-                                  ),
-                                  passwordController.text,
+              child: BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state.status == AuthStatus.success) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => HomeScreen()),
+                    );
+                  }
+                },
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return state.status == AuthStatus.loading
+                        ? Center(
+                            child: SizedBox(
+                              height: 48.h,
+                              child: Center(
+                                child: Lottie.asset(
+                                  AppLotties.splashLoading,
                                 ),
-                              );
-                        });
-              }),
+                              ),
+                            ),
+                          )
+                        : Column(
+                            spacing: 16.h,
+                            children: [
+                              state.message != null
+                                  ? Text(state.message!,
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 255, 0, 0),
+                                      ))
+                                  : SizedBox(),
+                              CustomButton(
+                                text: "Continue",
+                                onTap: () {
+                                  if (key.currentState!.validate()) {
+                                    context.read<AuthBloc>().add(
+                                          RegisterEvent(
+                                            UserModel(
+                                              id: '',
+                                              age: int.tryParse(
+                                                      ageNameController.text) ??
+                                                  10,
+                                              fullName: fullNameController.text,
+                                              email: emailController.text,
+                                              phoneNumber:
+                                                  phoneNumberController.text,
+                                              username: userNameController.text,
+                                              userStatus: widget.status,
+                                              birthday: DateTime
+                                                  .now(), // DateTime.parse(dateOfBirthController.text),
+                                              createdAt: DateTime.now(),
+                                            ),
+                                            passwordController.text,
+                                          ),
+                                        );
+                                  }
+                                },
+                              ),
+                            ],
+                          );
+                  },
+                ),
+              ),
             ),
           ),
         ],
