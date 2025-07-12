@@ -60,41 +60,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           )
         ],
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(24),
-      //   child: GridView.builder(
-      //     itemCount: 10,
-      //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //       crossAxisCount: 2,
-      //       crossAxisSpacing: 16.w,
-      //     ),
-      //     itemBuilder: (context, index) {
-      //       return Stack(
-      //         children: [
-      //           ClipRRect(
-      //             borderRadius: BorderRadius.circular(16.r),
-      //             child: Image.network(
-      //               AppConstants.errorImage,
-      //               width: double.infinity,
-      //               height: 100.h,
-      //               fit: BoxFit.cover,
-      //             ),
-      //           ),
-      //           Positioned(
-      //             left: 12.w,
-      //             bottom: 40.h,
-      //             child: Text(
-      //               "Title",
-      //               style:
-      //                   AppTextstyles.bw700s16.copyWith(color: AppColors.white),
-      //             ),
-      //           )
-      //         ],
-      //       );
-      //     },
-      //   ),
-      // ),
-
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           if (state is CategoryLoading) {
@@ -107,7 +72,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 itemCount: categoryList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 16.w,
+                  crossAxisSpacing: 16.h,
+                  mainAxisSpacing: 16.w,
+                  // mainAxisExtent: 100,
                 ),
                 itemBuilder: (context, index) {
                   final category = categoryList[index];
@@ -141,7 +108,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           } else if (state is CategoryError) {
             return Center(child: Text("Xatolik: ${state.message}"));
           }
-          return SizedBox();
+          return const SizedBox();
         },
       ),
     );
