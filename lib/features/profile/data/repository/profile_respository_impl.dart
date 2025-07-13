@@ -16,4 +16,17 @@ class ProfileRespositoryImpl implements ProfileRepository {
   Future<bool> editUserDateOfBirthday({required DateTime newDate}) {
     return dataSource.editUserDateOfBirthday(newDate: newDate);
   }
+
+  @override
+  Future<bool> editUserAllInfo({
+    required String newFullName,
+    required String phoneNumber,
+    required String age,
+  }) {
+    return dataSource.editUserAllInfo(
+      newFullName: newFullName,
+      phoneNumber: phoneNumber,
+      age: age,
+    );
+  }
 }

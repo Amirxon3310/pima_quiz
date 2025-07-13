@@ -12,19 +12,10 @@ class CustomDatetimePicker {
     if (context.mounted) {
       if (date == null) return null;
 
-      final TimeOfDay? time = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-      );
-
-      if (time == null) return null;
-
       return DateTime(
         date.year,
         date.month,
         date.day,
-        time.hour,
-        time.minute,
       );
     }
     return null;

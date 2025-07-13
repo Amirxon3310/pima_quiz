@@ -48,15 +48,23 @@ class _SecurityScreenState extends State<SecurityScreen> {
           spacing: 24.h,
           children: [
             MusicEffectSwitch(
+              value: true,
               title: "Biometric ID",
+              onChanged: (value) {},
             ),
             MusicEffectSwitch(
+              value: true,
+              onChanged: (value) {},
               title: "Face ID",
             ),
             MusicEffectSwitch(
+              value: true,
+              onChanged: (value) {},
               title: "SMS Authenticator",
             ),
             MusicEffectSwitch(
+              value: true,
+              onChanged: (value) {},
               title: "Google Authenticator",
             ),
             MusicEffectWidget(title: "Device Management"),

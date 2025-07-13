@@ -40,4 +40,25 @@ class ProfileDatasourceImpl implements ProfileDatasource {
       return false;
     }
   }
+
+  @override
+  Future<bool> editUserAllInfo({
+    required String newFullName,
+    required String phoneNumber,
+    required String age,
+  }) async {
+    final userId = firebaseAuth.currentUser?.uid;
+    try {
+      await firestore.collection('users').doc(userId).update({
+        'full_name': newFullName,
+        'phone': phoneNumber,
+        'age': int.parse(age)
+      });
+      return true;
+    } catch (e, stack) {
+      print(stack);
+      print(e);
+      return false;
+    }
+  }
 }

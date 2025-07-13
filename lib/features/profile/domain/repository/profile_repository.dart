@@ -5,4 +5,9 @@ abstract class ProfileRepository {
   Future<bool> editUserDateOfBirthday({
     required DateTime newDate,
   });
+  Future<bool> editUserAllInfo({
+    required String newFullName,
+    required String phoneNumber,
+    required String age,
+  });
 }

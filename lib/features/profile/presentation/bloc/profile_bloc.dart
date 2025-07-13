@@ -36,5 +36,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         }
       },
     );
+
+    on<EditUserAllInfo>((event, emit) async {
+      emit(state.copyWith(isLoading: true, error: null));
+      try {
+        final isEditFullName = await repository.editUserAllInfo(
+          newFullName: event.newFullName,
+          phoneNumber: event.phoneNumber,
+          age: event.age,
+        );
+        if (isEditFullName == true) {
+          final user = await repository.getUserById();
+          emit(state.copyWith(isLoading: false, user: user));
+        }
+      } catch (e, stack) {
+        emit(state.copyWith(isLoading: false, error: e.toString()));
+        print(stack);
+      }
+    });
   }
 }

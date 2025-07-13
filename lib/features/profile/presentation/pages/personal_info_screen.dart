@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,12 +7,14 @@ import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
+import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/core/widgets/custom_datetime_picker.dart';
 import 'package:pima_quiz/core/widgets/custom_datetime_widget.dart';
 import 'package:pima_quiz/core/widgets/custom_textfield.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_event.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_state.dart';
+import 'package:pima_quiz/features/profile/presentation/widgets/profile_info_shimmer.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   const PersonalInfoScreen({super.key});
@@ -63,7 +66,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state.isLoading) {
-            return Center(child: CircularProgressIndicator());
+            return ProfileInfoShimmer();
           }
           if (state.error != null) {
             return Center(
@@ -168,14 +171,34 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       title: "age",
                       controller: ageNameController,
                       hintText: "25",
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                     ),
-                    36.height,
+                    100.height,
                   ],
                 ),
               ),
             ),
           );
         },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.all(24),
+        child: CustomButton(
+          text: "Edit",
+          onTap: () {
+            context.read<ProfileBloc>().add(
+                  EditUserAllInfo(
+                    age: ageNameController.text,
+                    newFullName: fullNameController.text,
+                    phoneNumber: phoneNumberController.text,
+                  ),
+                );
+          },
+        ),
       ),
     );
   }
