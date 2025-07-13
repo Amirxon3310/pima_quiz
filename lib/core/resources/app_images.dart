@@ -6,4 +6,5 @@ class AppImages {
   static const profileSettingsBanner =
       "assets/images/profile_setting_banner.png";
   static const personalInfoAvatar = "assets/images/personal_info_avatar.png";
+  static const profileImages = "assets/images/profileBanner.png";
 }

@@ -12,10 +12,10 @@ class MusicAndEffectsScreen extends StatefulWidget {
 }
 
 class _MusicAndEffectsScreenState extends State<MusicAndEffectsScreen> {
-  bool biometricID = false;
-  bool faceID = false;
-  bool smsAuth = false;
-  bool googleAuth = false;
+  bool music = false;
+  bool soundEffects = false;
+  bool animationsEffects = false;
+  bool visualEffetcts = false;
 
   @override
   void initState() {
@@ -24,10 +24,12 @@ class _MusicAndEffectsScreenState extends State<MusicAndEffectsScreen> {
   }
 
   void loadSettingsFromHive() {
-    biometricID = HiveController.instance.read<bool>('biometricID') ?? false;
-    faceID = HiveController.instance.read<bool>('faceID') ?? false;
-    smsAuth = HiveController.instance.read<bool>('smsAuth') ?? false;
-    googleAuth = HiveController.instance.read<bool>('googleAuth') ?? false;
+    music = HiveController.instance.read<bool>('Music') ?? false;
+    soundEffects = HiveController.instance.read<bool>('SoundEffects') ?? false;
+    animationsEffects =
+        HiveController.instance.read<bool>('AnimationEffects') ?? false;
+    visualEffetcts =
+        HiveController.instance.read<bool>('VisualEffects') ?? false;
     setState(() {});
   }
 
@@ -35,17 +37,17 @@ class _MusicAndEffectsScreenState extends State<MusicAndEffectsScreen> {
     await HiveController.instance.write<bool>(key, value);
     setState(() {
       switch (key) {
-        case 'biometricID':
-          biometricID = value;
+        case 'Music':
+          music = value;
           break;
-        case 'faceID':
-          faceID = value;
+        case 'SoundEffects':
+          soundEffects = value;
           break;
-        case 'smsAuth':
-          smsAuth = value;
+        case 'AnimationEffects':
+          animationsEffects = value;
           break;
-        case 'googleAuth':
-          googleAuth = value;
+        case 'VisualEffects':
+          visualEffetcts = value;
           break;
       }
     });
@@ -75,26 +77,27 @@ class _MusicAndEffectsScreenState extends State<MusicAndEffectsScreen> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
         child: Column(
+          spacing: 16.h,
           children: [
             MusicEffectSwitch(
-              title: "Biometric ID",
-              value: biometricID,
-              onChanged: (val) => updateSetting('biometricID', val),
+              title: "Music",
+              value: music,
+              onChanged: (val) => updateSetting('Music', val),
             ),
             MusicEffectSwitch(
-              title: "Face ID",
-              value: faceID,
-              onChanged: (val) => updateSetting('faceID', val),
+              title: "Sound Effects",
+              value: soundEffects,
+              onChanged: (val) => updateSetting('SoundEffects', val),
             ),
             MusicEffectSwitch(
-              title: "SMS Authenticator",
-              value: smsAuth,
-              onChanged: (val) => updateSetting('smsAuth', val),
+              title: "Animation Effects",
+              value: animationsEffects,
+              onChanged: (val) => updateSetting('AnimationEffects', val),
             ),
             MusicEffectSwitch(
-              title: "Google Authenticator",
-              value: googleAuth,
-              onChanged: (val) => updateSetting('googleAuth', val),
+              title: "Visual Effects",
+              value: visualEffetcts,
+              onChanged: (val) => updateSetting('VisualEffects', val),
             ),
           ],
         ),

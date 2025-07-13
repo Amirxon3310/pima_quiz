@@ -34,6 +34,7 @@ void main() async {
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
   );
+
   await Hive.initFlutter();
   await HiveController.instance.init();
   runApp(MyApp());
