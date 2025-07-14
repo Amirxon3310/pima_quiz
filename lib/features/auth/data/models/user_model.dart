@@ -44,7 +44,7 @@ class UserModel {
       birthday: json['birthday'] != null
           ? (json['birthday'] as Timestamp).toDate()
           : null,
-      createdAt: DateTime.parse(json['createdAt']),
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
       image: json['image'],
     );
   }

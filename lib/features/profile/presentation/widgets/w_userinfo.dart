@@ -66,6 +66,7 @@ class _UserInfoState extends State<UserInfo> {
                     ),
                   ),
                 ),
+                12.width,
                 Flexible(
                   flex: 4,
                   child: Column(
