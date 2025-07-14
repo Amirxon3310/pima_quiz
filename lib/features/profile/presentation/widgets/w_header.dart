@@ -5,6 +5,8 @@ import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/widgets/press_effect.dart';
+import 'package:pima_quiz/features/profile/presentation/pages/followers_screen.dart';
+import 'package:pima_quiz/features/profile/presentation/pages/my_statistic_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/profile_settings_screen.dart';
 
 class Header extends StatelessWidget {
@@ -33,18 +35,38 @@ class Header extends StatelessWidget {
         Row(
           spacing: 12.w,
           children: [
-            SizedBox(
-              height: 28.h,
-              child: SvgPicture.asset(
-                AppIcons.send,
-                color: Colors.white,
+            PressEffect(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FollowersScreen(),
+                  ),
+                );
+              },
+              child: SizedBox(
+                height: 28.h,
+                child: SvgPicture.asset(
+                  AppIcons.send,
+                  color: Colors.white,
+                ),
               ),
             ),
-            SizedBox(
-              height: 28.h,
-              child: SvgPicture.asset(
-                AppIcons.activity,
-                color: Colors.white,
+            PressEffect(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyStatisticScreen(),
+                  ),
+                );
+              },
+              child: SizedBox(
+                height: 28.h,
+                child: SvgPicture.asset(
+                  AppIcons.activity,
+                  color: Colors.white,
+                ),
               ),
             ),
             PressEffect(

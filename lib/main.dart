@@ -26,6 +26,7 @@ import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.d
 import 'package:pima_quiz/features/profile/data/datasource/profile_datasource_impl.dart';
 import 'package:pima_quiz/features/profile/data/repository/profile_respository_impl.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:pima_quiz/features/profile/presentation/bloc/profile_event.dart';
 import 'package:pima_quiz/firebase_options.dart';
 
 void main() async {
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
                     firestore: FirebaseFirestore.instance,
                   ),
                 ),
-              ),
+              )..add(GetUserByIdEvent()),
             ),
             BlocProvider(
               create: (_) => BannersBloc(
