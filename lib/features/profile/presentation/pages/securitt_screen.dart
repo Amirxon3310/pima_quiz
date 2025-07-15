@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/features/profile/presentation/widgets/music_effect_widget.dart';
@@ -13,7 +14,45 @@ class SecurityScreen extends StatefulWidget {
 }
 
 class _SecurityScreenState extends State<SecurityScreen> {
-  bool isSwitched = true;
+  bool biometricId = false;
+  bool faceId = false;
+  bool sms = false;
+  bool googleAuth = false;
+
+  @override
+  void initState() {
+    super.initState();
+    loadSettingsFromHive();
+  }
+
+  void loadSettingsFromHive() {
+    biometricId = HiveController.instance.read<bool>('BiometricID') ?? false;
+    faceId = HiveController.instance.read<bool>('faceID') ?? false;
+    sms = HiveController.instance.read<bool>('sms') ?? false;
+    googleAuth = HiveController.instance.read<bool>('googleAuth') ?? false;
+    setState(() {});
+  }
+
+  void updateSetting(String key, bool value) async {
+    await HiveController.instance.write<bool>(key, value);
+    setState(() {
+      switch (key) {
+        case 'BiometricID':
+          biometricId = value;
+          break;
+        case 'faceID':
+          faceId = value;
+          break;
+        case 'sms':
+          sms = value;
+          break;
+        case 'googleAuth':
+          googleAuth = value;
+          break;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,15 +87,23 @@ class _SecurityScreenState extends State<SecurityScreen> {
           spacing: 24.h,
           children: [
             MusicEffectSwitch(
+              value: biometricId,
               title: "Biometric ID",
+              onChanged: (value) => updateSetting('BiometricID', value),
             ),
             MusicEffectSwitch(
+              value: faceId,
+              onChanged: (value) => updateSetting('faceID', value),
               title: "Face ID",
             ),
             MusicEffectSwitch(
+              value: sms,
+              onChanged: (value) => updateSetting('sms', value),
               title: "SMS Authenticator",
             ),
             MusicEffectSwitch(
+              value: googleAuth,
+              onChanged: (value) => updateSetting('googleAuth', value),
               title: "Google Authenticator",
             ),
             MusicEffectWidget(title: "Device Management"),

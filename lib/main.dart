@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/features/auth/data/datasource/auth_datasource_impl.dart';
 import 'package:pima_quiz/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
@@ -24,6 +26,7 @@ import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.d
 import 'package:pima_quiz/features/profile/data/datasource/profile_datasource_impl.dart';
 import 'package:pima_quiz/features/profile/data/repository/profile_respository_impl.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:pima_quiz/features/profile/presentation/bloc/profile_event.dart';
 import 'package:pima_quiz/firebase_options.dart';
 
 void main() async {
@@ -33,6 +36,8 @@ void main() async {
     persistenceEnabled: true,
   );
 
+  await Hive.initFlutter();
+  await HiveController.instance.init();
   runApp(MyApp());
 }
 
@@ -63,9 +68,11 @@ class MyApp extends StatelessWidget {
               create: (context) => ProfileBloc(
                 repository: ProfileRespositoryImpl(
                   dataSource: ProfileDatasourceImpl(
-                      firestore: FirebaseFirestore.instance),
+                    firebaseAuth: FirebaseAuth.instance,
+                    firestore: FirebaseFirestore.instance,
+                  ),
                 ),
-              ),
+              )..add(GetUserByIdEvent()),
             ),
             BlocProvider(
               create: (_) => BannersBloc(

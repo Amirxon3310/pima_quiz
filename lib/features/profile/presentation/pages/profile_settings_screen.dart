@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
@@ -20,6 +21,8 @@ class ProfileSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("Profile: ${FirebaseAuth.instance.currentUser?.uid}");
+    print("${HiveController.instance.read<bool>('Music')}");
+    print("${HiveController.instance.read<bool>('SoundEffects')}");
     return Scaffold(
       backgroundColor: AppColors.dark1,
       appBar: AppBar(
@@ -142,12 +145,6 @@ class ProfileSettingsScreen extends StatelessWidget {
                   color: AppColors.transparentGreen,
                 ),
                 SettingsWidget(
-                  onTap: () {},
-                  title: 'Dark mode',
-                  icon: AppIcons.show,
-                  color: AppColors.transparentBlue,
-                ),
-                SettingsWidget(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -160,12 +157,12 @@ class ProfileSettingsScreen extends StatelessWidget {
                   icon: AppIcons.paper,
                   color: AppColors.transparentOrange,
                 ),
-                SettingsWidget(
-                  onTap: () {},
-                  title: 'About Quiozzo',
-                  icon: AppIcons.infoSquare,
-                  color: AppColors.transparentPurple,
-                ),
+                // SettingsWidget(
+                //   onTap: () {},
+                //   title: 'About Quiozzo',
+                //   icon: AppIcons.infoSquare,
+                //   color: AppColors.transparentPurple,
+                // ),
                 SettingsWidget(
                   onTap: () {
                     customBottomSheet(

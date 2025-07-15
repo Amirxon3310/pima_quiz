@@ -41,12 +41,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
         child: Column(
           spacing: 20.h,
           children: [
-            HelpCenterWidget(icon: AppIcons.message, title: "Custom Service"),
-            HelpCenterWidget(icon: AppIcons.message, title: "WhatsApp"),
-            HelpCenterWidget(icon: AppIcons.message, title: "Website"),
-            HelpCenterWidget(icon: AppIcons.message, title: "Facebook"),
-            HelpCenterWidget(icon: AppIcons.message, title: "Twitter"),
-            HelpCenterWidget(icon: AppIcons.message, title: "Instagram"),
+            HelpCenterWidget(icon: AppIcons.message, title: "Telegramm"),
           ],
         ),
       ),

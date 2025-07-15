@@ -8,6 +8,7 @@ import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/core/widgets/custom_datetime_picker.dart';
+import 'package:pima_quiz/core/widgets/custom_datetime_widget.dart';
 import 'package:pima_quiz/core/widgets/custom_textfield.dart';
 import 'package:pima_quiz/features/auth/data/models/user_model.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
@@ -131,14 +132,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: userNameController,
                       hintText: "andrew_ainsley",
                     ),
-                    CustomTextField(
+                    CustomDatetimeWidget(
                       title: "Date of Birth",
-                      hintText: "12/27/1995",
+                      valueText: dateOfBirth,
                       onTap: () async {
                         DateTime? selectedDateTime =
                             await CustomDatetimePicker.pickDateTime(context);
                         if (selectedDateTime != null) {
-                          dateOfBirth = selectedDateTime;
+                          setState(() {
+                            dateOfBirth = selectedDateTime;
+                          });
                           print(selectedDateTime);
                         }
                       },

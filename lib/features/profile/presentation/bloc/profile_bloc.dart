@@ -11,7 +11,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       (event, emit) async {
         emit(state.copyWith(isLoading: true, error: null));
         try {
-          final user = await repository.getUserById(event.userId);
+          final user = await repository.getUserById();
           emit(state.copyWith(isLoading: false, user: user));
         } catch (e, stack) {
           emit(state.copyWith(isLoading: false, error: e.toString()));
@@ -19,5 +19,40 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         }
       },
     );
+
+    on<EditUserDateOfBirhtday>(
+      (event, emit) async {
+        emit(state.copyWith(isLoading: true, error: null));
+        try {
+          final isEditBirthday =
+              await repository.editUserDateOfBirthday(newDate: event.newDate);
+          if (isEditBirthday == true) {
+            final user = await repository.getUserById();
+            emit(state.copyWith(isLoading: false, user: user));
+          }
+        } catch (e, stack) {
+          emit(state.copyWith(isLoading: false, error: e.toString()));
+          print(stack);
+        }
+      },
+    );
+
+    on<EditUserAllInfo>((event, emit) async {
+      emit(state.copyWith(isLoading: true, error: null));
+      try {
+        final isEditFullName = await repository.editUserAllInfo(
+          newFullName: event.newFullName,
+          phoneNumber: event.phoneNumber,
+          age: event.age,
+        );
+        if (isEditFullName == true) {
+          final user = await repository.getUserById();
+          emit(state.copyWith(isLoading: false, user: user));
+        }
+      } catch (e, stack) {
+        emit(state.copyWith(isLoading: false, error: e.toString()));
+        print(stack);
+      }
+    });
   }
 }
