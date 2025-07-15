@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
-import 'package:pima_quiz/features/auth/presentation/pages/on_boarding.dart';
+import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (mounted) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => OnboardingScreen()),
+            MaterialPageRoute(builder: (context) => MainScreen()),
           );
         }
       },

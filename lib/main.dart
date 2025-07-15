@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: MainScreen(), // Splash screenni joyiga qo'yishim kerak.
+            home: SplashScreen(),
             builder: (context, widget) {
               ScreenUtil.init(context);
               return MediaQuery(

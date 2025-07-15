@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
+import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class TestResultScreen extends StatefulWidget {
   const TestResultScreen({super.key});
@@ -32,7 +33,14 @@ class _TestResultScreenState extends State<TestResultScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MainScreen(),
+                        ),
+                      );
+                    },
                     icon: Icon(
                       Icons.clear,
                       size: 30,
@@ -89,7 +97,14 @@ class _TestResultScreenState extends State<TestResultScreen> {
               CustomButton(
                 fillColor: Colors.white,
                 text: "Next",
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainScreen(),
+                    ),
+                  );
+                },
               )
             ],
           ),

@@ -6,9 +6,11 @@ import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
+import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_state.dart';
+import 'package:pima_quiz/features/home/presentation/pages/quiz_details_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -78,29 +80,39 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
                 itemBuilder: (context, index) {
                   final category = categoryList[index];
-                  return Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(16.r),
-                        child: Image.network(
-                          category.url.isNotEmpty
-                              ? category.url
-                              : AppConstants.errorImage,
-                          width: double.infinity,
-                          height: 100.h,
-                          fit: BoxFit.cover,
+                  return PressEffect(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QuizDetailsScreen(),
                         ),
-                      ),
-                      Positioned(
-                        left: 12.w,
-                        bottom: 40.h,
-                        child: Text(
-                          category.title,
-                          style: AppTextstyles.bw700s16
-                              .copyWith(color: AppColors.white),
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(16.r),
+                          child: Image.network(
+                            category.url.isNotEmpty
+                                ? category.url
+                                : AppConstants.errorImage,
+                            width: double.infinity,
+                            height: 100.h,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      )
-                    ],
+                        Positioned(
+                          left: 12.w,
+                          bottom: 40.h,
+                          child: Text(
+                            category.title,
+                            style: AppTextstyles.bw700s16
+                                .copyWith(color: AppColors.white),
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 },
               ),
