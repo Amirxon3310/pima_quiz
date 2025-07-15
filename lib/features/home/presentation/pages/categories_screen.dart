@@ -36,7 +36,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         centerTitle: false,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
+          child: PressEffect(
             onTap: () => Navigator.pop(context),
             child: SvgPicture.asset(
               AppIcons.arrowLeft,

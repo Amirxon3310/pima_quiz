@@ -6,6 +6,7 @@ import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
+import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_state.dart';
@@ -35,7 +36,7 @@ class _NewsScreenState extends State<NewsScreen> {
         centerTitle: false,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
+          child: PressEffect(
             onTap: () => Navigator.pop(context),
             child: SvgPicture.asset(
               AppIcons.arrowLeft,
@@ -73,7 +74,7 @@ class _NewsScreenState extends State<NewsScreen> {
               itemCount: newsList.length,
               itemBuilder: (context, index) {
                 final news = newsList[index];
-                return GestureDetector(
+                return PressEffect(
                   onTap: () {
                     Navigator.push(
                       context,

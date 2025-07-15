@@ -7,15 +7,21 @@ import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
+import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_state.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_state.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_state.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_event.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_state.dart';
 import 'package:pima_quiz/features/home/presentation/pages/categories_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/category_details_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/news_details_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/news_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/top_users_screen.dart';
@@ -40,6 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     BlocProvider.of<BannersBloc>(context).add(LoadBannersEvent());
     BlocProvider.of<NewsBloc>(context).add(LoadNewsEvent());
+    BlocProvider.of<UsersBloc>(context).add(LoadUsersEvent());
+    BlocProvider.of<CategoryBloc>(context).add(LoadCategoryEvent());
 
     _timer = Timer.periodic(
       const Duration(seconds: 10),
@@ -195,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: newsList.length,
                         itemBuilder: (context, index) {
                           final news = newsList[index];
-                          return GestureDetector(
+                          return PressEffect(
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -242,30 +250,51 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               SizedBox(height: 16.h),
-              SizedBox(
-                height: 110.h,
-                child: ListView.separated(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      spacing: 12.h,
-                      children: [
-                        CircleAvatar(
-                          radius: 40.r,
-                          backgroundColor: AppColors.teal,
-                        ),
-                        Text("Name", style: AppTextstyles.bw700s16)
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) {
+              BlocBuilder<UsersBloc, UsersState>(
+                builder: (context, state) {
+                  if (state is UsersLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is UsersLoaded) {
+                    final usersList = state.originalUsersList;
                     return SizedBox(
-                      width: 20.w,
+                      height: 110.h,
+                      child: ListView.separated(
+                        clipBehavior: Clip.none,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final users = usersList[index];
+                          return Column(
+                            spacing: 12.h,
+                            children: [
+                              CircleAvatar(
+                                radius: 40.r,
+                                backgroundImage: NetworkImage(
+                                    users.url.isNotEmpty
+                                        ? users.url
+                                        : AppConstants.errorImage),
+                              ),
+                              Text(
+                                  users.name.isNotEmpty
+                                      ? users.name.split(" ").first
+                                      : "Unknown",
+                                  style: AppTextstyles.bw700s16)
+                            ],
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            width: 20.w,
+                          );
+                        },
+                        itemCount: usersList.length,
+                      ),
                     );
-                  },
-                  itemCount: 10,
-                ),
+                  } else if (state is UsersError) {
+                    return Center(child: Text("Xatolik: ${state.message}"));
+                  } else {
+                    return const SizedBox();
+                  }
+                },
               ),
               SizedBox(height: 24.h),
               ViewAllWidget(
@@ -296,11 +325,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: categoriesList.length,
                         itemBuilder: (context, index) {
                           final categories = categoriesList[index];
-                          return CategoryWidget(
-                            title: categories.title,
-                            image: categories.url.isNotEmpty
-                                ? categories.url
-                                : AppConstants.errorImage,
+                          return PressEffect(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CategoryDetailsScreen(
+                                      category: categories),
+                                ),
+                              );
+                            },
+                            child: CategoryWidget(
+                              title: categories.title,
+                              image: categories.url.isNotEmpty
+                                  ? categories.url
+                                  : AppConstants.errorImage,
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
