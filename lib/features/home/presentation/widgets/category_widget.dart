@@ -5,10 +5,8 @@ import 'package:pima_quiz/core/resources/app_textstyles.dart';
 
 class CategoryWidget extends StatelessWidget {
   final String title;
-  const CategoryWidget({
-    super.key,
-    required this.title,
-  });
+  final String image;
+  const CategoryWidget({super.key, required this.title, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,7 @@ class CategoryWidget extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
-            "https://t3.ftcdn.net/jpg/14/00/03/24/360_F_1400032430_oXDjfVkNTnOAeHZpSMbQsZKQOH4NB7Nf.jpg",
+            image,
             width: 180.w,
             height: 120.h,
             fit: BoxFit.cover,
