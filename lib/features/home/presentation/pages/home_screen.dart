@@ -10,9 +10,12 @@ import 'package:pima_quiz/core/resources/app_textstyles.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_state.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_state.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_state.dart';
+import 'package:pima_quiz/features/home/presentation/pages/categories_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/news_details_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/news_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/top_users_screen.dart';
@@ -267,22 +270,52 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 24.h),
               ViewAllWidget(
                 title: "Kategoriyalar",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoriesScreen(),
+                    ),
+                  );
+                },
               ),
               SizedBox(height: 16.h),
-              SizedBox(
-                height: 100.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.none,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return CategoryWidget(title: "Mantiqiy");
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: 16.w);
-                  },
-                ),
+              BlocBuilder<CategoryBloc, CategoryState>(
+                builder: (context, state) {
+                  if (state is CategoryLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is CategoryLoaded) {
+                    final categoriesList = state.categoryList;
+                    return SizedBox(
+                      height: 100.h,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        clipBehavior: Clip.none,
+                        itemCount: categoriesList.length,
+                        itemBuilder: (context, index) {
+                          final categories = categoriesList[index];
+                          return CategoryWidget(
+                            title: categories.title,
+                            image: categories.url.isNotEmpty
+                                ? categories.url
+                                : AppConstants.errorImage,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(width: 16.w);
+                        },
+                      ),
+                    );
+                  } else if (state is CategoryError) {
+                    return Center(
+                      child: Text("Xatolik: ${state.message}"),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
               ),
               SizedBox(height: 24.h),
               ViewAllWidget(title: "Trenddagi quizlar", onTap: () {}),
