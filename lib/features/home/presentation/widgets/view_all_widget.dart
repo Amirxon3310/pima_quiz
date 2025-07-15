@@ -3,10 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
+import 'package:pima_quiz/core/widgets/press_effect.dart';
 
 class ViewAllWidget extends StatelessWidget {
   final String title;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
   const ViewAllWidget({
     super.key,
     required this.title,
@@ -22,7 +23,7 @@ class ViewAllWidget extends StatelessWidget {
           title,
           style: AppTextstyles.h5w700s20.copyWith(color: AppColors.white),
         ),
-        GestureDetector(
+        PressEffect(
           onTap: onTap,
           child: Row(
             mainAxisSize: MainAxisSize.min,

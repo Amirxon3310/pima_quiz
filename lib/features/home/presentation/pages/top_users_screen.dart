@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
+import 'package:pima_quiz/core/widgets/press_effect.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_event.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_state.dart';
 import 'package:pima_quiz/features/home/presentation/widgets/view_all_widget.dart';
 
 class TopUsersScreen extends StatefulWidget {
@@ -15,6 +21,12 @@ class TopUsersScreen extends StatefulWidget {
 
 class _TopUsersScreenState extends State<TopUsersScreen> {
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<UsersBloc>(context).add(LoadUsersEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.dark1,
@@ -24,7 +36,7 @@ class _TopUsersScreenState extends State<TopUsersScreen> {
         centerTitle: false,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
+          child: PressEffect(
             onTap: () => Navigator.pop(context),
             child: SvgPicture.asset(
               AppIcons.arrowLeft,
@@ -44,6 +56,9 @@ class _TopUsersScreenState extends State<TopUsersScreen> {
         child: Column(
           children: [
             TextFormField(
+              onChanged: (value) {
+                context.read<UsersBloc>().add(SearchUsersEvent(value));
+              },
               cursorColor: AppColors.grey600,
               style: AppTextstyles.bw400s16.copyWith(color: AppColors.grey600),
               decoration: InputDecoration(
@@ -76,40 +91,60 @@ class _TopUsersScreenState extends State<TopUsersScreen> {
             SizedBox(height: 24.h),
             ViewAllWidget(title: "People you may know", onTap: () {}),
             SizedBox(height: 24.h),
-            Flexible(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CircleAvatar(
-                        radius: 30.r,
-                        backgroundColor: AppColors.cyan,
-                      ),
-                      Text(
-                        "Darron Kulikowski",
-                        style: AppTextstyles.h6w600s18
-                            .copyWith(color: AppColors.white),
-                      ),
-                      FilledButton(
-                        onPressed: () {},
-                        style: FilledButton.styleFrom(
-                            backgroundColor: AppColors.primary500),
-                        child: Text(
-                          "12 coin",
-                          style: AppTextstyles.bw600s14
-                              .copyWith(color: AppColors.white),
-                        ),
-                      )
-                    ],
+            Flexible(child: BlocBuilder<UsersBloc, UsersState>(
+              builder: (context, state) {
+                if (state is UsersLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is UsersLoaded) {
+                  final usersList = state.filteredUsersList;
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final user = usersList[index];
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircleAvatar(
+                            radius: 30.r,
+                            backgroundImage: NetworkImage(user.url.isNotEmpty
+                                ? user.url
+                                : AppConstants.errorImage),
+                          ),
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: Text(
+                              user.name.isNotEmpty ? user.name : "Unknown",
+                              style: AppTextstyles.h6w600s18
+                                  .copyWith(color: AppColors.white),
+                            ),
+                          ),
+                          Spacer(),
+                          FilledButton(
+                            onPressed: () {},
+                            style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.primary500),
+                            child: Text(
+                              user.point,
+                              style: AppTextstyles.bw600s14
+                                  .copyWith(color: AppColors.white),
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(height: 24.h);
+                    },
+                    itemCount: usersList.length,
                   );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(height: 24.h);
-                },
-                itemCount: 10,
-              ),
-            )
+                } else if (state is UsersError) {
+                  return Center(child: Text("Xatolik: ${state.message}"));
+                } else if (state is UsersSearching) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ))
           ],
         ),
       ),

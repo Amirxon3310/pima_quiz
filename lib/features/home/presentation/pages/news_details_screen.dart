@@ -5,6 +5,7 @@ import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
+import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/domain/entities/news_entity.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
         surfaceTintColor: AppColors.dark1,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
+          child: PressEffect(
             onTap: () => Navigator.pop(context),
             child: SvgPicture.asset(
               AppIcons.arrowLeft,

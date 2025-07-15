@@ -6,9 +6,11 @@ import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
+import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_state.dart';
+import 'package:pima_quiz/features/home/presentation/pages/category_details_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -34,7 +36,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         centerTitle: false,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: GestureDetector(
+          child: PressEffect(
             onTap: () => Navigator.pop(context),
             child: SvgPicture.asset(
               AppIcons.arrowLeft,
@@ -80,15 +82,25 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   final category = categoryList[index];
                   return Stack(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(16.r),
-                        child: Image.network(
-                          category.url.isNotEmpty
-                              ? category.url
-                              : AppConstants.errorImage,
-                          width: double.infinity,
-                          height: 100.h,
-                          fit: BoxFit.cover,
+                      PressEffect(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CategoryDetailsScreen(category: category),
+                              ));
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16.r),
+                          child: Image.network(
+                            category.url.isNotEmpty
+                                ? category.url
+                                : AppConstants.errorImage,
+                            width: double.infinity,
+                            height: 100.h,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       Positioned(
