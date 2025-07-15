@@ -27,9 +27,6 @@ import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_bloc.dart';
-import 'package:pima_quiz/features/home/presentation/pages/categories_screen.dart';
-import 'package:pima_quiz/features/home/presentation/pages/category_details_screen.dart';
-import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 import 'package:pima_quiz/features/profile/data/datasource/profile_datasource_impl.dart';
 import 'package:pima_quiz/features/profile/data/repository/profile_respository_impl.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
@@ -120,7 +117,7 @@ class MyApp extends StatelessWidget {
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: MainScreen(), // Splash screenni joyiga qo'yishim kerak.
+            home: SplashScreen(), // Splash screenni joyiga qo'yishim kerak.
             builder: (context, widget) {
               ScreenUtil.init(context);
               return MediaQuery(
