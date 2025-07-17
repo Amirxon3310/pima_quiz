@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
+import 'package:pima_quiz/core/resources/app_lotties.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
 import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_bloc.dart';
@@ -113,7 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocBuilder<BannersBloc, BannersState>(
                 builder: (context, state) {
                   if (state is BannersLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: Lottie.asset(AppLotties.splashLoading),
+                    );
                   } else if (state is BannersLoaded) {
                     final banners = state.banners;
                     final index = _currentIndex % banners.length;
@@ -189,8 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocBuilder<NewsBloc, NewsState>(
                 builder: (context, state) {
                   if (state is NewsLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Center(
+                      child: Lottie.asset(AppLotties.splashLoading),
                     );
                   } else if (state is NewsLoaded) {
                     final newsList = state.newsList;
@@ -253,7 +257,9 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocBuilder<UsersBloc, UsersState>(
                 builder: (context, state) {
                   if (state is UsersLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: Lottie.asset(AppLotties.splashLoading),
+                    );
                   } else if (state is UsersLoaded) {
                     final usersList = state.originalUsersList;
                     return SizedBox(
@@ -312,8 +318,8 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   if (state is CategoryLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Center(
+                      child: Lottie.asset(AppLotties.splashLoading),
                     );
                   } else if (state is CategoryLoaded) {
                     final categoriesList = state.categoryList;

@@ -33,17 +33,12 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: AppColors.dark1,
       body: screens[_currentIndex],
       bottomNavigationBar: ClipRRect(
-        // clipBehavior: Clip.none,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24.r),
           topRight: Radius.circular(24.r),
         ),
         child: Material(
           color: AppColors.dark3,
-          // elevation: 10,
-          // clipBehavior: Clip.none,
-          // padding: EdgeInsets.only(top: 12.h),
-          // decoration: BoxDecoration(color: AppColors.dark3),
           child: Padding(
             padding: EdgeInsets.only(top: 12.h),
             child: BottomNavigationBar(
@@ -115,6 +110,26 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomBottomNavigationBar extends StatelessWidget {
+  const CustomBottomNavigationBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24.r),
+          topRight: Radius.circular(24.r),
+        ),
+        // color: Color(0xFF181A20).wi
+      ),
+      child: Row(
+        children: [],
       ),
     );
   }

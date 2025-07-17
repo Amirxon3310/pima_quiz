@@ -13,10 +13,12 @@ import 'package:pima_quiz/features/auth/presentation/pages/splash_screen.dart';
 import 'package:pima_quiz/features/home/data/datasources/banners_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/datasources/categories_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/datasources/news_remote_datasource.dart';
+import 'package:pima_quiz/features/home/data/datasources/questions_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/datasources/users_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/repositories/banners_repository_impl.dart';
 import 'package:pima_quiz/features/home/data/repositories/categories_repository_impl.dart';
 import 'package:pima_quiz/features/home/data/repositories/news_repository_impl.dart';
+import 'package:pima_quiz/features/home/data/repositories/questions_repository_impl.dart';
 import 'package:pima_quiz/features/home/data/repositories/users_repository_impl.dart';
 import 'package:pima_quiz/features/home/domain/usecases/get_banners_usecase.dart';
 import 'package:pima_quiz/features/home/domain/usecases/get_categories_usecase.dart';
@@ -26,6 +28,7 @@ import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_bloc.dart';
 import 'package:pima_quiz/features/profile/data/datasource/profile_datasource_impl.dart';
 import 'package:pima_quiz/features/profile/data/repository/profile_respository_impl.dart';
@@ -111,6 +114,13 @@ class MyApp extends StatelessWidget {
                   UsersRepositoryImpl(
                     UsersRemoteDatasourceImpl(FirebaseFirestore.instance),
                   ),
+                ),
+              ),
+            ),
+            BlocProvider(
+              create: (_) => QuestionsBloc(
+                QuestionsRepositoryImpl(
+                  QuestionsRemoteDatasourceImpl(FirebaseFirestore.instance),
                 ),
               ),
             )
