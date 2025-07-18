@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pima_quiz/core/constants/app_constants.dart';
+import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
@@ -121,6 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else if (state is BannersLoaded) {
                     final banners = state.banners;
                     final index = _currentIndex % banners.length;
+                    HiveController.instance.write(
+                        "banners", banners.map((e) => e.toJson()).toList());
 
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(16.r),
@@ -172,6 +175,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   } else if (state is BannersError) {
+                    // final cached =
+                    //     HiveController.instance.read<List>("banners");
+                    // if (cached != null) {
+                    //   final banners = cached
+                    //       .map((e) => e.BannerEntity.fromJson(e))
+                    //       .toList();
+                    // }
                     return Text("Xatolik: ${state.message}");
                   } else {
                     return const SizedBox();
