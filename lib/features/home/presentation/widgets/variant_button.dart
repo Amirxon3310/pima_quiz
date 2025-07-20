@@ -13,7 +13,7 @@ class VariantButton extends StatelessWidget {
       onTap: () {},
       child: Container(
         width: double.infinity,
-        height: double.infinity,
+        height: 60,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: color,

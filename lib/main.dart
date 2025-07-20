@@ -13,6 +13,7 @@ import 'package:pima_quiz/features/auth/presentation/pages/splash_screen.dart';
 import 'package:pima_quiz/features/home/data/datasources/banners_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/datasources/categories_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/datasources/news_remote_datasource.dart';
+import 'package:pima_quiz/features/home/data/datasources/quiz_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/datasources/users_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/repositories/banners_repository_impl.dart';
 import 'package:pima_quiz/features/home/data/repositories/categories_repository_impl.dart';
@@ -26,6 +27,7 @@ import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_bloc.dart';
 import 'package:pima_quiz/features/profile/data/datasource/profile_datasource_impl.dart';
 import 'package:pima_quiz/features/profile/data/repository/profile_respository_impl.dart';
@@ -58,6 +60,11 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
+            BlocProvider(
+              create: (context) => QuizBloc(
+                QuizRemoteDatasourceImpl(FirebaseFirestore.instance),
+              ),
+            ),
             BlocProvider(
               create: (context) => AuthBloc(
                 repository: AuthRepositoryImpl(

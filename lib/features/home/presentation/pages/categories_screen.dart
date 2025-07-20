@@ -10,7 +10,7 @@ import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_state.dart';
-import 'package:pima_quiz/features/home/presentation/pages/quiz_details_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/category_details_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -85,7 +85,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => QuizDetailsScreen(),
+                          builder: (context) => CategoryDetailsScreen(
+                            category: categoryList[index],
+                          ),
                         ),
                       );
                     },

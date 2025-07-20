@@ -12,6 +12,7 @@ import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/categ
 import 'package:pima_quiz/features/home/presentation/blocs/categories_bloc/category_state.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.dart';
+import 'package:pima_quiz/features/home/presentation/pages/quiz_details_screen.dart';
 
 class CategoryDetailsScreen extends StatefulWidget {
   final CategoryEntity category;
@@ -126,21 +127,22 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is CategoryLoaded) {
-                  final categoryList = state.categoryList;
+                  // final categoryList = state.categoryList;
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: categoryList.length,
+                      itemCount: widget.category.quizs.length,
                       itemBuilder: (context, index) {
-                        final category = categoryList[index];
+                        final quiz = widget.category.quizs[index];
                         return PressEffect(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         CategoryDetailsScreen(category: category),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => QuizDetailsScreen(
+                                  quizId: quiz,
+                                ),
+                              ),
+                            );
                           },
                           child: Container(
                             margin: EdgeInsets.symmetric(
@@ -160,8 +162,8 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                                     bottomLeft: Radius.circular(12.r),
                                   ),
                                   child: Image.network(
-                                    category.url.isNotEmpty
-                                        ? category.url
+                                    widget.category.url.isNotEmpty
+                                        ? widget.category.url
                                         : AppConstants.errorImage,
                                     width: 140.w,
                                     height: 110.h,
@@ -176,7 +178,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        category.title,
+                                        widget.category.title,
                                         style: AppTextstyles.h6w700s18
                                             .copyWith(color: AppColors.white),
                                         maxLines: 2,

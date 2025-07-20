@@ -6,6 +6,7 @@ class CategoryModel extends CategoryEntity {
     required super.id,
     required super.title,
     required super.url,
+    required super.quizs,
   });
 
   factory CategoryModel.fromDoc(DocumentSnapshot doc) {
@@ -14,6 +15,7 @@ class CategoryModel extends CategoryEntity {
       id: data["id"],
       title: data["title"] ?? "",
       url: data["url"] ?? "",
+      quizs: (data['quizs'] is List) ? (data['quizs'] as List) : [],
     );
   }
 }

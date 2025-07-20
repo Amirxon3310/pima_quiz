@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
@@ -6,11 +7,15 @@ import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_event.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_state.dart';
 import 'package:pima_quiz/features/home/presentation/pages/test_screen.dart';
 import 'package:pima_quiz/features/home/presentation/widgets/w_test_details.dart';
 
 class QuizDetailsScreen extends StatefulWidget {
-  const QuizDetailsScreen({super.key});
+  final String quizId;
+  const QuizDetailsScreen({super.key, required this.quizId});
 
   @override
   State<QuizDetailsScreen> createState() => _QuizDetailsScreenState();
@@ -18,13 +23,22 @@ class QuizDetailsScreen extends StatefulWidget {
 
 class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
   @override
+  void didChangeDependencies() {
+    context.read<QuizBloc>().add(GetQuizById(widget.quizId));
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(widget.quizId);
     return Scaffold(
       backgroundColor: AppColors.dark1,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: Icon(
             Icons.clear,
             color: Colors.white,
@@ -58,154 +72,169 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 20.h,
-          children: [
-            1.width,
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImages.profileImages),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(20.r),
-              ),
-              width: double.infinity,
-              height: 180.h,
-            ),
-            Column(
+        child: BlocBuilder<QuizBloc, QuizState>(
+          builder: (context, state) {
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 20.h,
               children: [
-                Text(
-                  "Having Fun & Always Smile!",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Nunito",
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  "text narxi: 12 coin",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontFamily: "Nunito",
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              spacing: 12,
-              children: [
+                1.width,
                 Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: (state.quiz?.photo != null &&
+                              state.quiz!.photo!.isNotEmpty)
+                          ? NetworkImage(state.quiz!.photo!)
+                          : AssetImage(AppImages.profileImages)
+                              as ImageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
                   width: double.infinity,
-                  height: 1,
-                  color: AppColors.dark4,
+                  height: 180.h,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Flexible(
-                      flex: 1,
-                      child:
-                          WTestDetails(title: "26", description: 'Qusetions'),
+                    Text(
+                      state.quiz?.title ?? '',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Nunito",
+                        color: Colors.white,
+                      ),
                     ),
-                    Container(
-                      width: 1,
-                      height: 50,
-                      color: AppColors.dark4,
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child:
-                          WTestDetails(title: "18.5K", description: 'Played'),
-                    ),
-                    Container(
-                      width: 1,
-                      height: 50,
-                      color: AppColors.dark4,
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child:
-                          WTestDetails(title: "925", description: 'Favorited'),
-                    ),
-                    Container(
-                      width: 1,
-                      height: 50,
-                      color: AppColors.dark4,
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: WTestDetails(title: "256", description: 'Shared'),
+                    Text(
+                      "text narxi: 12 coin",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontFamily: "Nunito",
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 1,
-                  color: AppColors.dark4,
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 12,
-              children: [
-                Text(
-                  "Description",
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Nunito",
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  "Invite your friends to play quiz together!",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontFamily: "Nunito",
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            Spacer(),
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).padding.bottom),
-              child: Row(
-                spacing: 16,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: CustomButton(
-                      text: "Add to favorite",
-                      onTap: () {},
-                      isFilled: false,
+                Column(
+                  spacing: 12,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: AppColors.dark4,
                     ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: CustomButton(
-                      text: "Testni boshlash",
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TestScreen(),
-                          ),
-                        );
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: WTestDetails(
+                              title: state.quiz?.questions ?? '0',
+                              description: 'Qusetions'),
+                        ),
+                        Container(
+                          width: 1,
+                          height: 50,
+                          color: AppColors.dark4,
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: WTestDetails(
+                              title: state.quiz?.played ?? '0',
+                              description: 'Played'),
+                        ),
+                        Container(
+                          width: 1,
+                          height: 50,
+                          color: AppColors.dark4,
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: WTestDetails(
+                              title: state.quiz?.favorited ?? '0',
+                              description: 'Favorited'),
+                        ),
+                        Container(
+                          width: 1,
+                          height: 50,
+                          color: AppColors.dark4,
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: WTestDetails(
+                              title: state.quiz?.shared ?? '0',
+                              description: 'Shared'),
+                        ),
+                      ],
                     ),
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: AppColors.dark4,
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 12,
+                  children: [
+                    Text(
+                      "Description",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Nunito",
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "Invite your friends to play state.quiz? together!",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontFamily: "Nunito",
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).padding.bottom),
+                  child: Row(
+                    spacing: 16,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: CustomButton(
+                          text: "Add to favorite",
+                          onTap: () {},
+                          isFilled: false,
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: CustomButton(
+                          text: "Testni boshlash",
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TestScreen(
+                                  testId: state.quiz?.questionsBodyId ?? '',
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
-          ],
+                )
+              ],
+            );
+          },
         ),
       ),
     );

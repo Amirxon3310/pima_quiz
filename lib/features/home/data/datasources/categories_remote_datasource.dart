@@ -12,7 +12,12 @@ class CategoriesRemoteDatasourceImpl implements CategoriesRemoteDatasource {
 
   @override
   Future<List<CategoryModel>> getCategories() async {
-    final snap = await firestore.collection("categories").get();
-    return snap.docs.map((e) => CategoryModel.fromDoc(e)).toList();
+    try {
+      final snap = await firestore.collection("categories").get();
+      return snap.docs.map((e) => CategoryModel.fromDoc(e)).toList();
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 }
