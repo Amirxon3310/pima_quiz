@@ -18,3 +18,5 @@ class CheckAnswer extends QuizEvent {
 
   CheckAnswer({required this.answerId, required this.questionid});
 }
+
+class RestartAllEvent extends QuizEvent {}

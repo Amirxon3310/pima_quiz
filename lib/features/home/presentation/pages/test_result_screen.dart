@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_bloc.dart';
+import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_event.dart';
 import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class TestResultScreen extends StatefulWidget {
@@ -12,6 +15,12 @@ class TestResultScreen extends StatefulWidget {
 }
 
 class _TestResultScreenState extends State<TestResultScreen> {
+  @override
+  void didChangeDependencies() {
+    context.read<QuizBloc>().add(RestartAllEvent());
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

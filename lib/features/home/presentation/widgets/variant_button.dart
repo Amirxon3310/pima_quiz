@@ -5,12 +5,20 @@ import 'package:pima_quiz/core/widgets/press_effect.dart';
 class VariantButton extends StatelessWidget {
   final Color color;
   final String title;
-  const VariantButton({super.key, required this.color, required this.title});
+  final Function onTap;
+  const VariantButton({
+    super.key,
+    required this.color,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return PressEffect(
-      onTap: () {},
+      onTap: () {
+        onTap();
+      },
       child: Container(
         width: double.infinity,
         height: 60,

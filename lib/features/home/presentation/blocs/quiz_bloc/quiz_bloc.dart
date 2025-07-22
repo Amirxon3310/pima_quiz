@@ -10,7 +10,10 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       : super(QuizState(
           quiz: QuizModel(),
           tests: [],
-          checkBox: false,
+          checkBox: null,
+          index: 0,
+          count: 0,
+          theEnd: null,
         )) {
     on<GetQuizById>((event, emit) async {
       final result = await data.getQuizById(event.id);
@@ -26,8 +29,24 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
     on<CheckAnswer>((event, emit) async {
       final result = await data.checkAnswer(
-          answerId: event.answerId, questionId: event.questionid);
-      emit(state.copyWith(checkBox: result));
+        answerId: event.answerId,
+        questionId: event.questionid,
+      );
+
+      emit(state.copyWith(checkBox: result, count: state.count + 1));
+      final newIndex = state.index + 1;
+      await Future.delayed(Duration(seconds: 1));
+      if (newIndex < state.tests.length) {
+        emit(state.copyWith(index: newIndex));
+      } else {
+        emit(state.copyWith(theEnd: true));
+      }
+    });
+
+    on<RestartAllEvent>((event, emit) {
+      emit(
+        QuizState(tests: [], quiz: QuizModel(), index: 0, count: 0),
+      );
     });
   }
 }
