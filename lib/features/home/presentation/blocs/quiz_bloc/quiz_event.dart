@@ -20,3 +20,11 @@ class CheckAnswer extends QuizEvent {
 }
 
 class RestartAllEvent extends QuizEvent {}
+
+class SelectedAnswerEvent extends QuizEvent {
+  final String answerId;
+
+  SelectedAnswerEvent({required this.answerId});
+}
+
+class NextQuestion extends QuizEvent {}

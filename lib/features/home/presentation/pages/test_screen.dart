@@ -29,6 +29,8 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   String? answerId;
+  String questionId = "";
+  ValueNotifier<bool> isClose = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +55,18 @@ class _TestScreenState extends State<TestScreen> {
             listener: (context, state) {
               if (state.checkBox == true) {
                 showTopNotification(
-                  context: context,
-                  message: "+2",
-                  backgroundColor: AppColors.success,
-                  title: "Correct",
-                );
+                    context: context,
+                    message: "+2",
+                    backgroundColor: AppColors.success,
+                    title: "Correct",
+                    isClose: isClose);
               } else if (state.checkBox == false) {
                 showTopNotification(
                   context: context,
                   message: "Fyuhhh.. That was close",
                   backgroundColor: AppColors.error,
                   title: "Incorrect",
+                  isClose: isClose,
                 );
               }
             },
@@ -83,7 +86,7 @@ class _TestScreenState extends State<TestScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${1}/${state.tests.length}',
+                                '${state.count2 + 1}/${state.tests.length}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -123,9 +126,11 @@ class _TestScreenState extends State<TestScreen> {
                                 ),
                               ),
                               AnimatedContainer(
-                                width: double.infinity,
+                                curve: Curves.easeInOut,
+                                width:
+                                    400 * (state.count2 / state.tests.length),
                                 height: 16,
-                                duration: Duration(milliseconds: 500),
+                                duration: Duration(seconds: 1),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
                                   color: Colors.greenAccent,
@@ -188,65 +193,121 @@ class _TestScreenState extends State<TestScreen> {
                                             Flexible(
                                               flex: 1,
                                               child: VariantButton(
-                                                onTap: () async {
-                                                  context
-                                                      .read<QuizBloc>()
-                                                      .add(CheckAnswer(
-                                                        answerId:
-                                                            test.options[0].id,
-                                                        questionid: test.id,
-                                                      ));
+                                                onTap: () {
+                                                  context.read<QuizBloc>().add(
+                                                      SelectedAnswerEvent(
+                                                          answerId: test
+                                                              .options[0].id));
+                                                  answerId = test.options[0].id;
+                                                  questionId = test.id;
                                                 },
-                                                color: AppColors.blue,
+                                                color: state
+                                                        .selectedAnswer.isEmpty
+                                                    ? AppColors.blue
+                                                    : state.selectedAnswer ==
+                                                            test.options[0].id
+                                                        ? AppColors.blue
+                                                        : AppColors.blue
+                                                            .withAlpha(50),
                                                 title: test.options[0].text,
+                                                titleColor: state
+                                                        .selectedAnswer.isEmpty
+                                                    ? AppColors.white
+                                                    : state.selectedAnswer ==
+                                                            test.options[0].id
+                                                        ? AppColors.white
+                                                        : AppColors.white
+                                                            .withAlpha(50),
                                               ),
                                             ),
                                             Flexible(
                                               flex: 1,
                                               child: VariantButton(
-                                                onTap: () async {
-                                                  context
-                                                      .read<QuizBloc>()
-                                                      .add(CheckAnswer(
-                                                        answerId:
-                                                            test.options[1].id,
-                                                        questionid: test.id,
-                                                      ));
+                                                onTap: () {
+                                                  context.read<QuizBloc>().add(
+                                                      SelectedAnswerEvent(
+                                                          answerId: test
+                                                              .options[1].id));
+                                                  answerId = test.options[1].id;
+                                                  questionId = test.id;
                                                 },
-                                                color: AppColors.success,
+                                                color: state
+                                                        .selectedAnswer.isEmpty
+                                                    ? AppColors.success
+                                                    : state.selectedAnswer ==
+                                                            test.options[1].id
+                                                        ? AppColors.success
+                                                        : AppColors.success
+                                                            .withAlpha(50),
                                                 title: test.options[1].text,
+                                                titleColor: state
+                                                        .selectedAnswer.isEmpty
+                                                    ? AppColors.white
+                                                    : state.selectedAnswer ==
+                                                            test.options[1].id
+                                                        ? AppColors.white
+                                                        : AppColors.white
+                                                            .withAlpha(50),
                                               ),
                                             ),
                                             Flexible(
                                               flex: 1,
                                               child: VariantButton(
-                                                onTap: () async {
-                                                  context
-                                                      .read<QuizBloc>()
-                                                      .add(CheckAnswer(
-                                                        answerId:
-                                                            test.options[2].id,
-                                                        questionid: test.id,
-                                                      ));
+                                                onTap: () {
+                                                  context.read<QuizBloc>().add(
+                                                      SelectedAnswerEvent(
+                                                          answerId: test
+                                                              .options[2].id));
+                                                  answerId = test.options[2].id;
+                                                  questionId = test.id;
                                                 },
-                                                color: AppColors.orange,
+                                                color: state
+                                                        .selectedAnswer.isEmpty
+                                                    ? AppColors.orange
+                                                    : state.selectedAnswer ==
+                                                            test.options[2].id
+                                                        ? AppColors.orange
+                                                        : AppColors.orange
+                                                            .withAlpha(50),
                                                 title: test.options[2].text,
+                                                titleColor: state
+                                                        .selectedAnswer.isEmpty
+                                                    ? AppColors.white
+                                                    : state.selectedAnswer ==
+                                                            test.options[2].id
+                                                        ? AppColors.white
+                                                        : AppColors.white
+                                                            .withAlpha(50),
                                               ),
                                             ),
                                             Flexible(
                                               flex: 1,
                                               child: VariantButton(
-                                                onTap: () async {
-                                                  context
-                                                      .read<QuizBloc>()
-                                                      .add(CheckAnswer(
-                                                        answerId:
-                                                            test.options[3].id,
-                                                        questionid: test.id,
-                                                      ));
+                                                onTap: () {
+                                                  context.read<QuizBloc>().add(
+                                                      SelectedAnswerEvent(
+                                                          answerId: test
+                                                              .options[3].id));
+                                                  answerId = test.options[3].id;
+                                                  questionId = test.id;
                                                 },
-                                                color: AppColors.error,
+                                                color: state
+                                                        .selectedAnswer.isEmpty
+                                                    ? AppColors.error
+                                                    : state.selectedAnswer ==
+                                                            test.options[3].id
+                                                        ? AppColors.error
+                                                        : AppColors.error
+                                                            .withAlpha(50),
                                                 title: test.options[3].text,
+                                                titleColor: state
+                                                        .selectedAnswer.isEmpty
+                                                    ? AppColors.white
+                                                    : state.selectedAnswer ==
+                                                            test.options[3].id
+                                                        ? AppColors.white
+                                                        : AppColors.white
+                                                            .withAlpha(50),
                                               ),
                                             ),
                                           ],
@@ -257,9 +318,35 @@ class _TestScreenState extends State<TestScreen> {
                                 }),
                           ),
                           4.height,
-                          CustomButton(
-                            text: "Submit answer",
-                            onTap: () {},
+                          BlocBuilder<QuizBloc, QuizState>(
+                            builder: (context, state) {
+                              return state.nextQuestion
+                                  ? CustomButton(
+                                      text: "Next",
+                                      onTap: () {
+                                        isClose.value = state.nextQuestion;
+                                        context
+                                            .read<QuizBloc>()
+                                            .add(NextQuestion());
+                                      })
+                                  : CustomButton(
+                                      text: "Submit answer",
+                                      onTap: answerId != null &&
+                                              questionId.isNotEmpty
+                                          ? () {
+                                              isClose.value =
+                                                  state.nextQuestion;
+                                              context.read<QuizBloc>().add(
+                                                    CheckAnswer(
+                                                        answerId: answerId!,
+                                                        questionid: questionId),
+                                                  );
+                                            }
+                                          : () {},
+                                      isFilled: state.selectedAnswer.isNotEmpty
+                                          ? true
+                                          : false);
+                            },
                           ),
                         ],
                       ),

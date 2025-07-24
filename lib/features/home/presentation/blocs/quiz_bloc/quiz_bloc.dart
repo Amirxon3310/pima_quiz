@@ -8,14 +8,18 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final QuizRemoteDatasourceImpl data;
   QuizBloc(this.data)
       : super(QuizState(
-            quiz: QuizModel(),
-            tests: [],
-            checkBox: null,
-            index: 0,
-            count: 0,
-            theEnd: null,
-            correctAnswer: 0,
-            isLoading: false)) {
+          quiz: QuizModel(),
+          tests: [],
+          checkBox: null,
+          index: 0,
+          count: 0,
+          theEnd: null,
+          correctAnswer: 0,
+          isLoading: false,
+          selectedAnswer: "",
+          nextQuestion: false,
+          count2: 0,
+        )) {
     on<GetQuizById>((event, emit) async {
       emit(state.copyWith(isLoading: true));
       final result = await data.getQuizById(event.id);
@@ -39,13 +43,26 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         emit(state.copyWith(correctAnswer: state.correctAnswer + 1));
       }
 
-      emit(state.copyWith(checkBox: result, count: state.count + 1));
+      emit(state.copyWith(
+          checkBox: result, count: state.count + 1, nextQuestion: true));
+    });
+
+    on<NextQuestion>((event, emit) {
       final newIndex = state.index + 1;
       if (newIndex < state.tests.length) {
-        emit(state.copyWith(index: newIndex));
+        emit(state.copyWith(
+          index: newIndex,
+          selectedAnswer: "",
+          nextQuestion: false,
+          count2: state.count,
+        ));
       } else {
-        emit(state.copyWith(theEnd: true));
+        emit(state.copyWith(theEnd: true, nextQuestion: false));
       }
+    });
+
+    on<SelectedAnswerEvent>((event, emit) {
+      emit(state.copyWith(selectedAnswer: event.answerId));
     });
 
     on<RestartAllEvent>((event, emit) {
@@ -57,6 +74,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           count: 0,
           isLoading: false,
           correctAnswer: 0,
+          selectedAnswer: "",
+          nextQuestion: false,
+          count2: 0,
         ),
       );
     });

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
@@ -8,6 +10,7 @@ void showTopNotification({
   required String message,
   required Color backgroundColor,
   required String title,
+  required ValueNotifier<bool> isClose,
 }) {
   final overlayState = Overlay.of(context);
   late OverlayEntry overlayEntry;
@@ -88,7 +91,14 @@ void showTopNotification({
     top = 0;
   });
 
-  Future.delayed(Duration(seconds: 2), () {
-    overlayEntry.remove();
+  Timer.periodic(Duration(milliseconds: 100), (timer) {
+    if (isClose.value) {
+      overlayEntry.remove();
+      timer.cancel();
+    }
   });
+
+  // Future.delayed(Duration(seconds: 2), () {
+  //   overlayEntry.remove();
+  // });
 }

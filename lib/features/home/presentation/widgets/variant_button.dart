@@ -6,12 +6,13 @@ class VariantButton extends StatelessWidget {
   final Color color;
   final String title;
   final Function onTap;
-  const VariantButton({
-    super.key,
-    required this.color,
-    required this.title,
-    required this.onTap,
-  });
+  final Color titleColor;
+  const VariantButton(
+      {super.key,
+      required this.color,
+      required this.title,
+      required this.onTap,
+      required this.titleColor});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class VariantButton extends StatelessWidget {
               fontSize: 17.sp,
               fontWeight: FontWeight.w600,
               fontFamily: "Nunito",
-              color: Colors.white,
+              color: titleColor,
             ),
           ),
         ),
