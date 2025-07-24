@@ -8,19 +8,16 @@ import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_event.
 import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class TestResultScreen extends StatefulWidget {
-  const TestResultScreen({super.key});
+  final int totalQusetion;
+  final int correctAnswer;
+  const TestResultScreen(
+      {super.key, required this.totalQusetion, required this.correctAnswer});
 
   @override
   State<TestResultScreen> createState() => _TestResultScreenState();
 }
 
 class _TestResultScreenState extends State<TestResultScreen> {
-  @override
-  void didChangeDependencies() {
-    context.read<QuizBloc>().add(RestartAllEvent());
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +46,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
                           builder: (context) => MainScreen(),
                         ),
                       );
+                      context.read<QuizBloc>().add(RestartAllEvent());
                     },
                     icon: Icon(
                       Icons.clear,
@@ -71,7 +69,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
               Column(
                 children: [
                   Text(
-                    "Umumiy savollar: 12",
+                    "Umumiy savollar: ${widget.totalQusetion}",
                     style: TextStyle(
                       fontSize: 22,
                       fontFamily: "Nunito",
@@ -80,7 +78,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
                     ),
                   ),
                   Text(
-                    "Tog'ri javoblar soni: 10",
+                    "Tog'ri javoblar soni: ${widget.correctAnswer}",
                     style: TextStyle(
                       fontSize: 22,
                       fontFamily: "Nunito",
@@ -89,7 +87,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
                     ),
                   ),
                   Text(
-                    "80%",
+                    "${((widget.correctAnswer / widget.totalQusetion) * 100).toInt()}%",
                     style: TextStyle(
                       fontSize: 22,
                       fontFamily: "Nunito",
@@ -113,6 +111,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
                       builder: (context) => MainScreen(),
                     ),
                   );
+                  context.read<QuizBloc>().add(RestartAllEvent());
                 },
               )
             ],

@@ -24,13 +24,13 @@ class Option {
 
 class TestModel {
   final String id;
-  final String image;
+  final String? image;
   final String question;
   final List<Option> options;
 
   TestModel({
     required this.id,
-    required this.image,
+    this.image,
     required this.question,
     required this.options,
   });
@@ -38,7 +38,7 @@ class TestModel {
   factory TestModel.fromMap(Map<String, dynamic>? map) {
     return TestModel(
       id: map?['id'] ?? '',
-      image: map?['image'] ?? '',
+      image: map?['image'],
       question: map?['question'] ?? '',
       options: (map?['options'] as List<dynamic>? ?? [])
           .map((opt) => Option.fromMap(opt as Map<String, dynamic>?))

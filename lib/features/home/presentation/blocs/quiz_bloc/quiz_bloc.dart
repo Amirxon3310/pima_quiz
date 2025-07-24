@@ -8,16 +8,18 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final QuizRemoteDatasourceImpl data;
   QuizBloc(this.data)
       : super(QuizState(
-          quiz: QuizModel(),
-          tests: [],
-          checkBox: null,
-          index: 0,
-          count: 0,
-          theEnd: null,
-        )) {
+            quiz: QuizModel(),
+            tests: [],
+            checkBox: null,
+            index: 0,
+            count: 0,
+            theEnd: null,
+            correctAnswer: 0,
+            isLoading: false)) {
     on<GetQuizById>((event, emit) async {
+      emit(state.copyWith(isLoading: true));
       final result = await data.getQuizById(event.id);
-      emit(state.copyWith(quiz: result));
+      emit(state.copyWith(quiz: result, isLoading: false));
     });
 
     on<GetTestsById>(
@@ -33,9 +35,12 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         questionId: event.questionid,
       );
 
+      if (result == true) {
+        emit(state.copyWith(correctAnswer: state.correctAnswer + 1));
+      }
+
       emit(state.copyWith(checkBox: result, count: state.count + 1));
       final newIndex = state.index + 1;
-      await Future.delayed(Duration(seconds: 1));
       if (newIndex < state.tests.length) {
         emit(state.copyWith(index: newIndex));
       } else {
@@ -45,7 +50,14 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
     on<RestartAllEvent>((event, emit) {
       emit(
-        QuizState(tests: [], quiz: QuizModel(), index: 0, count: 0),
+        QuizState(
+          tests: [],
+          quiz: QuizModel(),
+          index: 0,
+          count: 0,
+          isLoading: false,
+          correctAnswer: 0,
+        ),
       );
     });
   }

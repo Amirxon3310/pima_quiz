@@ -28,18 +28,16 @@ class VariantButton extends StatelessWidget {
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Row(
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "Nunito",
-                  color: Colors.white,
-                ),
-              ),
-            ],
+          child: Text(
+            maxLines: 5,
+            title,
+            style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+              fontSize: 17.sp,
+              fontWeight: FontWeight.w600,
+              fontFamily: "Nunito",
+              color: Colors.white,
+            ),
           ),
         ),
       ),
