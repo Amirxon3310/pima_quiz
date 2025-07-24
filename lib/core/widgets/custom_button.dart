@@ -7,12 +7,14 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
   final bool isFilled;
+  final Color? fillColor;
 
   const CustomButton({
     super.key,
     required this.text,
     required this.onTap,
     this.isFilled = true,
+    this.fillColor,
   });
 
   @override
@@ -24,7 +26,8 @@ class CustomButton extends StatelessWidget {
         height: 48.h,
         child: Container(
           decoration: BoxDecoration(
-            color: isFilled ? AppColors.primary500 : AppColors.dark3,
+            color:
+                isFilled ? fillColor ?? AppColors.primary500 : AppColors.dark3,
             borderRadius: BorderRadius.circular(30.r),
           ),
           child: Center(
@@ -34,7 +37,7 @@ class CustomButton extends StatelessWidget {
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Nunito",
-                color: Colors.white,
+                color: fillColor != null ? AppColors.primary500 : Colors.white,
               ),
             ),
           ),

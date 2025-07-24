@@ -80,18 +80,20 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
                 itemBuilder: (context, index) {
                   final category = categoryList[index];
-                  return Stack(
-                    children: [
-                      PressEffect(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    CategoryDetailsScreen(category: category),
-                              ));
-                        },
-                        child: ClipRRect(
+                  return PressEffect(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryDetailsScreen(
+                            category: categoryList[index],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        ClipRRect(
                           borderRadius: BorderRadius.circular(16.r),
                           child: Image.network(
                             category.url.isNotEmpty
@@ -102,17 +104,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                      Positioned(
-                        left: 12.w,
-                        bottom: 40.h,
-                        child: Text(
-                          category.title,
-                          style: AppTextstyles.bw700s16
-                              .copyWith(color: AppColors.white),
-                        ),
-                      )
-                    ],
+                        Positioned(
+                          left: 12.w,
+                          bottom: 40.h,
+                          child: Text(
+                            category.title,
+                            style: AppTextstyles.bw700s16
+                                .copyWith(color: AppColors.white),
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 },
               ),
