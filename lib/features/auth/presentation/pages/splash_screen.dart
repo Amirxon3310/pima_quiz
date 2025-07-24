@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  "Quizzo",
+                  "Pima Quiz",
                   style: TextStyle(
                     fontFamily: "Nunito",
                     fontSize: 48.sp,

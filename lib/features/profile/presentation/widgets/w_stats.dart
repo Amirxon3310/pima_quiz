@@ -29,7 +29,7 @@ class Stats extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Quizzo",
+                      "Pima Quiz",
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontFamily: "Nunito",

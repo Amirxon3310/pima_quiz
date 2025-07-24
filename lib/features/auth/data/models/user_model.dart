@@ -16,7 +16,7 @@ class UserModel {
   final String? username;
   final DateTime? birthday;
   final UserStatus? userStatus;
-  final DateTime createdAt;
+  final DateTime? createdAt;
   final String? image;
 
   UserModel({
@@ -44,7 +44,9 @@ class UserModel {
       birthday: json['birthday'] != null
           ? (json['birthday'] as Timestamp).toDate()
           : null,
-      createdAt: (json['createdAt'] as Timestamp).toDate(),
+      createdAt: json['createdAt'] is Timestamp
+          ? (json['createdAt'] as Timestamp).toDate()
+          : null,
       image: json['image'],
     );
   }
@@ -59,7 +61,7 @@ class UserModel {
       'username': username,
       'status': userStatus?.name,
       'birthday': birthday != null ? Timestamp.fromDate(birthday!) : null,
-      'createdAt': Timestamp.fromDate(createdAt),
+      'createdAt': Timestamp.fromDate(createdAt ?? DateTime.now()),
       'image': image
     };
   }

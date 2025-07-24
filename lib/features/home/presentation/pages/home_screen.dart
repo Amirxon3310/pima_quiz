@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
+import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
 import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/banners_bloc/banners_bloc.dart';
@@ -76,13 +77,13 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
           child: Image.asset(
-            "assets/images/on_boarding.png",
+            AppImages.splashImage,
             width: 28.w,
             height: 28.h,
           ),
         ),
         title: Text(
-          "Quizzo",
+          "Pima Quiz",
           style: AppTextstyles.h4w700s24.copyWith(color: AppColors.white),
         ),
         actions: [

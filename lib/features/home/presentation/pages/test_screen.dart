@@ -320,10 +320,13 @@ class _TestScreenState extends State<TestScreen> {
                           4.height,
                           BlocBuilder<QuizBloc, QuizState>(
                             builder: (context, state) {
+                              print("NEXT: ${state.nextQuestion}");
                               return state.nextQuestion
                                   ? CustomButton(
                                       text: "Next",
                                       onTap: () {
+                                        answerId = null;
+                                        questionId = "";
                                         isClose.value = state.nextQuestion;
                                         context
                                             .read<QuizBloc>()

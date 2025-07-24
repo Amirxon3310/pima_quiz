@@ -2,7 +2,8 @@ import 'package:flutter/rendering.dart';
 
 class AppColors {
   // Main colors
-  static const Color primary500 = Color(0xFF6949FF);
+  // static const Color primary500 = Color(0xFF6949FF);
+  static const Color primary500 = Color(0xFF0089fe);
   static const Color primary400 = Color(0xFF876DFF);
   static const Color primary300 = Color(0xFFA592FF);
   static const Color primary200 = Color(0xFFC3B6FF);
