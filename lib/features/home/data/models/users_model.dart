@@ -11,9 +11,13 @@ class UsersModel extends UsersEntity {
   factory UsersModel.fromDoc(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return UsersModel(
-      name: data["full_name"] ?? "",
-      point: data["point"] ?? "",
+      name: data["full_name"] ?? "Unknown",
+      point: data["point"] ?? "0",
       url: data["image"] ?? "",
     );
+  }
+  @override
+  String toString() {
+    return "\nName: $name\nPoint: $point\nUrl: $url";
   }
 }

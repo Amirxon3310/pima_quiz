@@ -9,4 +9,7 @@ class UsersRepositoryImpl implements UsersRepository {
 
   @override
   Future<List<UsersEntity>> getUsers() => remote.getUsers();
+
+  @override
+  Future<List<UsersEntity>> getSortedUsers() => remote.getSortedUsers();
 }

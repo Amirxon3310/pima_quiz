@@ -29,7 +29,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       LoadUsersEvent event, Emitter<UsersState> emit) async {
     emit(UsersLoading());
     try {
-      final users = await useCase();
+      // final users = await useCase();
+      final users = await useCase.getOrderedUsers();
       _allUsers = users;
       emit(UsersLoaded(
         originalUsersList: users,

@@ -47,6 +47,8 @@ class AppColors {
   );
   static const LinearGradient gradientPurple = LinearGradient(
     colors: [Color(0xFF6949FF), Color(0xFF876DFF)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
   );
   static const LinearGradient gradientTeal = LinearGradient(
     colors: [Color(0xFF019B83), Color(0xFF18C6AB)],
