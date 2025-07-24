@@ -7,4 +7,6 @@ class GetUsersUsecase {
   GetUsersUsecase(this.repository);
 
   Future<List<UsersEntity>> call() => repository.getUsers();
+
+  Future<List<UsersEntity>> getOrderedUsers() => repository.getSortedUsers();
 }

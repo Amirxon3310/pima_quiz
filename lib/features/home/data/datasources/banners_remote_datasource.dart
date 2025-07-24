@@ -1,4 +1,3 @@
-// lib/features/banners/data/datasource/banners_remote_datasource.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/banner_model.dart';
 
@@ -13,9 +12,13 @@ class BannersRemoteDatasourceImpl implements BannersRemoteDatasource {
 
   @override
   Future<List<BannerModel>> getBanners() async {
-    final snapshot = await firestore.collection('banners').get();
-    return snapshot.docs
-        .map((doc) => BannerModel.fromMap(doc.data(), doc.id))
-        .toList();
+    try {
+      final snapshot = await firestore.collection('banners').get();
+      return snapshot.docs
+          .map((doc) => BannerModel.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (e) {
+      throw Exception("Xatolik: $e");
+    }
   }
 }
