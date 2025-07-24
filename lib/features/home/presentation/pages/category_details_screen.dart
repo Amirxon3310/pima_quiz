@@ -14,7 +14,7 @@ import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_state.dart';
-import 'package:pima_quiz/features/home/presentation/pages/quiz_details_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/test_screen.dart';
 
 class CategoryDetailsScreen extends StatefulWidget {
   final CategoryEntity category;
@@ -146,8 +146,19 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                     itemCount: questionsList.length,
                     itemBuilder: (context, index) {
                       final questions = questionsList[index];
+                      print("Category id ${questions.categoryId}");
+                      print("Question id ${questions.id}");
+                      print("Question body id ${questions.questionsBodyId}");
                       return PressEffect(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TestScreen(testId: questions.questionsBodyId),
+                            ),
+                          );
+                        },
                         child: Container(
                           margin: EdgeInsets.symmetric(
                               vertical: 10.h, horizontal: 24.w),
