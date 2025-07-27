@@ -5,7 +5,7 @@ import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_event.dart';
-import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/rankings_screen.dart';
 
 class TestResultScreen extends StatefulWidget {
   final int totalQusetion;
@@ -65,7 +65,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MainScreen(),
+                          builder: (context) => RankingsScreen(),
                         ),
                       );
                       context.read<QuizBloc>().add(RestartAllEvent());
@@ -130,7 +130,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainScreen(),
+                      builder: (context) => RankingsScreen(),
                     ),
                   );
                   context.read<QuizBloc>().add(RestartAllEvent());

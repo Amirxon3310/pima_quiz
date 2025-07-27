@@ -9,6 +9,7 @@ import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_state.dart';
+import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 import 'package:pima_quiz/features/home/presentation/widgets/podium_widget.dart';
 
 class RankingsScreen extends StatefulWidget {
@@ -41,7 +42,14 @@ class _RankingsScreenState extends State<RankingsScreen> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: PressEffect(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainScreen(),
+                  ),
+                );
+              },
               child: Icon(Icons.close, color: AppColors.white, size: 28),
             ),
             title: Text(
@@ -218,7 +226,14 @@ class _RankingsScreenState extends State<RankingsScreen> {
                   ),
                   Expanded(
                     child: PressEffect(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainScreen(),
+                          ),
+                        );
+                      },
                       child: Container(
                         width: double.infinity,
                         height: 40.h,
