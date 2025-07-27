@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
@@ -229,12 +230,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: EdgeInsets.only(
                   bottom: 36.h, right: 24.w, left: 24.w, top: 24.h),
               child: BlocListener<AuthBloc, AuthState>(
-                listener: (context, state) {
+                listener: (context, state) async {
                   if (state.status == AuthStatus.success) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => MainScreen()),
-                    );
+                    await HiveController.instance
+                        .write<String>('userId', 'bor');
+                    if (context.mounted) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => MainScreen()),
+                      );
+                    }
                   }
                 },
                 child: BlocBuilder<AuthBloc, AuthState>(

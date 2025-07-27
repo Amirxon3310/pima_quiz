@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
@@ -11,6 +12,7 @@ import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/forgot_password.dart';
+import 'package:pima_quiz/features/auth/presentation/pages/on_boarding.dart';
 import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -41,7 +43,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 InkWell(
                   child: Icon(Icons.arrow_back, color: Colors.white),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OnboardingScreen(),
+                      ),
+                    );
                   },
                 ),
                 SizedBox(height: 30.h),
@@ -171,12 +178,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Spacer(),
                 BlocListener<AuthBloc, AuthState>(
-                  listener: (context, state) {
+                  listener: (context, state) async {
                     if (state.status == AuthStatus.success) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => MainScreen()),
-                      );
+                      await HiveController.instance
+                          .write<String>('userId', 'bor');
+                      if (context.mounted) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => MainScreen()),
+                        );
+                      }
                     }
                   },
                   child: BlocBuilder<AuthBloc, AuthState>(

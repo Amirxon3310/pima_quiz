@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
+import 'package:pima_quiz/features/auth/presentation/pages/on_boarding.dart';
 import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,18 +19,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    _checkUserStatus();
+  }
 
-    Future.delayed(
-      Duration(seconds: 3),
-      () {
-        if (mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MainScreen()),
-          );
-        }
-      },
-    );
+  void _checkUserStatus() async {
+    await HiveController.instance.init();
+
+    await Future.delayed(Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    final token = HiveController.instance.read<String>('userId');
+
+    if (token != null && token.isNotEmpty) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+      );
+    }
   }
 
   @override

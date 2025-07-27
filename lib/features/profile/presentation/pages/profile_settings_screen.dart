@@ -198,13 +198,17 @@ class ProfileSettingsScreen extends StatelessWidget {
                                   flex: 1,
                                   child: CustomButton(
                                     text: "Yes, logout",
-                                    onTap: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginScreen(),
-                                        ),
-                                      );
+                                    onTap: () async {
+                                      await HiveController.instance
+                                          .delete('userId');
+                                      if (context.mounted) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => LoginScreen(),
+                                          ),
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
