@@ -80,7 +80,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(20.r),
+              borderRadius: BorderRadius.circular(20.r),
               child: Image.network(
                 widget.category.url,
                 width: double.infinity,

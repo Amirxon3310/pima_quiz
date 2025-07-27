@@ -53,7 +53,7 @@ class PodiumWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
           backgroundColor: AppColors.dark2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusGeometry.circular(100.r),
+            borderRadius: BorderRadius.circular(100.r),
             side: BorderSide(color: AppColors.dark2),
           ),
         ),
