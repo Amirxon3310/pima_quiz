@@ -14,6 +14,7 @@ abstract class QuizRemoteDatasource {
     required String name,
     required int quizCount,
   });
+  Future<void> incrementPlayed();
 }
 
 class QuizRemoteDatasourceImpl extends QuizRemoteDatasource {
@@ -103,6 +104,33 @@ class QuizRemoteDatasourceImpl extends QuizRemoteDatasource {
       await docRef.set({
         'tests': [newTestMap]
       });
+    }
+  }
+
+  @override
+  Future<void> incrementPlayed() async {
+    final docRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(firebaseAuth.currentUser?.uid);
+
+    final docSnapshot = await docRef.get();
+
+    if (docSnapshot.exists) {
+      final data = docSnapshot.data();
+      final currentPlayed = data?['played'];
+      final point = int.parse(data?['point'] ?? '0');
+
+      if (currentPlayed is int) {
+        await docRef.update(
+            {'played': currentPlayed + 1, 'point': (point + 10).toString()});
+      } else {
+        await docRef.update({
+          'played': 1,
+          'point': "10",
+        });
+      }
+    } else {
+      print("User document mavjud emas: ${firebaseAuth.currentUser?.uid}");
     }
   }
 }

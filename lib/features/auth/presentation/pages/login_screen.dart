@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pima_quiz/core/data/local_datasource.dart';
+import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
@@ -36,20 +37,23 @@ class _LoginScreenState extends State<LoginScreen> {
           key: key,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
                 SizedBox(height: 30.h),
-                InkWell(
-                  child: Icon(Icons.arrow_back, color: Colors.white),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => OnboardingScreen(),
-                      ),
-                    );
-                  },
+                Row(
+                  children: [
+                    InkWell(
+                      child: Icon(Icons.arrow_back, color: Colors.white),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OnboardingScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
                 SizedBox(height: 30.h),
                 Row(
@@ -100,22 +104,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 16.h),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Checkbox(
-                      value: true,
-                      onChanged: (v) {},
-                      activeColor: Color(0xFF7B61FF),
-                    ),
-                    Text(
-                      "Remember me",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontFamily: "Nunito",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Spacer(),
+                    // Checkbox(
+                    //   value: true,
+                    //   onChanged: (v) {},
+                    //   activeColor: Color(0xFF7B61FF),
+                    // ),
+                    // Text(
+                    //   "Remember me",
+                    //   style: TextStyle(
+                    //     color: Colors.white,
+                    //     fontSize: 14.sp,
+                    //     fontFamily: "Nunito",
+                    //     fontWeight: FontWeight.w600,
+                    //   ),
+                    // ),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -176,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                Spacer(),
+                120.height,
                 BlocListener<AuthBloc, AuthState>(
                   listener: (context, state) async {
                     if (state.status == AuthStatus.success) {

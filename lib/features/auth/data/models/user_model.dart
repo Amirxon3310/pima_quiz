@@ -18,6 +18,8 @@ class UserModel {
   final UserStatus? userStatus;
   final DateTime? createdAt;
   final String? image;
+  final int? played;
+  final String? point;
 
   UserModel({
     required this.id,
@@ -30,6 +32,8 @@ class UserModel {
     this.birthday,
     required this.createdAt,
     this.image,
+    this.played,
+    this.point,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) {
@@ -48,6 +52,8 @@ class UserModel {
           ? (json['createdAt'] as Timestamp).toDate()
           : null,
       image: json['image'],
+      point: json['point'],
+      played: json['played'],
     );
   }
 
@@ -62,7 +68,9 @@ class UserModel {
       'status': userStatus?.name,
       'birthday': birthday != null ? Timestamp.fromDate(birthday!) : null,
       'createdAt': Timestamp.fromDate(createdAt ?? DateTime.now()),
-      'image': image
+      'image': image,
+      'point': '10',
+      'played': 0,
     };
   }
 

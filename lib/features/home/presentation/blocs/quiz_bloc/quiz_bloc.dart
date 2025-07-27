@@ -72,6 +72,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         name: event.name,
         quizCount: event.quizCount,
       );
+      data.incrementPlayed();
     });
 
     on<RestartAllEvent>((event, emit) {
