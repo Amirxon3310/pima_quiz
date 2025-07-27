@@ -14,7 +14,6 @@ import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_state.dart';
-import 'package:pima_quiz/features/home/presentation/pages/quiz_details_screen.dart';
 
 class CategoryDetailsScreen extends StatefulWidget {
   final CategoryEntity category;

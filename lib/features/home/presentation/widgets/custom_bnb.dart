@@ -21,6 +21,8 @@ class CustomBnb extends StatelessWidget {
       valueListenable: selectedIndexNotifier,
       builder: (context, selectedIndex, _) {
         return ClipRRect(
+          borderRadius: BorderRadiusGeometry.only(
+              topLeft: Radius.circular(24.r), topRight: Radius.circular(24.r)),
           child: IntrinsicHeight(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 20.w, sigmaY: 20.h),
@@ -43,22 +45,26 @@ class CustomBnb extends StatelessWidget {
                         AppIcons.home,
                         AppIcons.category,
                         "assets/icons/join.svg",
-                        AppIcons.plus,
+                        AppIcons.threeUser,
                         AppIcons.profile
                       ];
                       final titles = [
                         "Home",
-                        "Library",
-                        "Join",
-                        "Plus",
+                        "Category",
+                        "News",
+                        "Users",
                         "Profile"
                       ];
-                      return PressEffect(
-                        onTap: () => selectedIndexNotifier.value = index,
-                        child: CustomBnbi(
-                          icon: icons[index],
-                          title: titles[index],
-                          isSelected: selectedIndex == index,
+                      return Expanded(
+                        child: PressEffect(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => selectedIndexNotifier.value = index,
+                          child: CustomBnbi(
+                            icon: icons[index],
+                            title: titles[index],
+                            index: index,
+                            isSelected: selectedIndex == index,
+                          ),
                         ),
                       );
                     },

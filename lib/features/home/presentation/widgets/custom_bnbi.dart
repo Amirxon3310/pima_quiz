@@ -8,13 +8,14 @@ class CustomBnbi extends StatelessWidget {
   final String icon;
   final String title;
   final bool isSelected;
+  final int? index;
 
-  const CustomBnbi({
-    super.key,
-    required this.icon,
-    required this.title,
-    this.isSelected = false,
-  });
+  const CustomBnbi(
+      {super.key,
+      required this.icon,
+      required this.title,
+      this.isSelected = false,
+      this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,11 @@ class CustomBnbi extends StatelessWidget {
           width: 28,
           height: 28,
           fit: BoxFit.scaleDown,
-          color: isSelected ? AppColors.white : AppColors.grey100,
+          color: index == 2
+              ? null
+              : isSelected
+                  ? AppColors.white
+                  : AppColors.grey100,
         ),
         SizedBox(height: 4.h),
         Text(
