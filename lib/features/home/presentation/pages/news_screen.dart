@@ -36,15 +36,21 @@ class _NewsScreenState extends State<NewsScreen> {
         centerTitle: false,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: PressEffect(
-            onTap: () => Navigator.pop(context),
-            child: SvgPicture.asset(
-              AppIcons.arrowLeft,
-              width: 28.w,
-              height: 28.h,
-              color: AppColors.white,
-            ),
-          ),
+          child: Navigator.canPop(context)
+              ? PressEffect(
+                  onTap: () {
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: SvgPicture.asset(
+                    AppIcons.arrowLeft,
+                    width: 28.w,
+                    height: 28.h,
+                    color: AppColors.white,
+                  ),
+                )
+              : null,
         ),
         title: Text(
           "Yangiliklar",
@@ -62,110 +68,119 @@ class _NewsScreenState extends State<NewsScreen> {
           )
         ],
       ),
-      body: BlocBuilder<NewsBloc, NewsState>(
-        builder: (context, state) {
-          if (state is NewsLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is NewsLoaded) {
-            final newsList = state.newsList;
-            return ListView.builder(
-              itemCount: newsList.length,
-              itemBuilder: (context, index) {
-                final news = newsList[index];
-                return PressEffect(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewsDetailsScreen(news: news),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    margin:
-                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 24.w),
-                    padding: EdgeInsets.only(right: 16.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.r),
-                      color: AppColors.dark4,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 16.w,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12.r),
-                            bottomLeft: Radius.circular(12.r),
+      body: Column(
+        children: [
+          BlocBuilder<NewsBloc, NewsState>(
+            builder: (context, state) {
+              if (state is NewsLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is NewsLoaded) {
+                final newsList = state.newsList;
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: newsList.length,
+                    itemBuilder: (context, index) {
+                      final news = newsList[index];
+                      return PressEffect(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  NewsDetailsScreen(news: news),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.h, horizontal: 24.w),
+                          padding: EdgeInsets.only(right: 16.w),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.r),
+                            color: AppColors.dark4,
                           ),
-                          child: Image.network(
-                            news.url.isNotEmpty
-                                ? news.url
-                                : AppConstants.errorImage,
-                            width: 140.w,
-                            height: 110.h,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 16.w,
                             children: [
-                              Text(
-                                news.title,
-                                style: AppTextstyles.h6w700s18
-                                    .copyWith(color: AppColors.white),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12.r),
+                                  bottomLeft: Radius.circular(12.r),
+                                ),
+                                child: Image.network(
+                                  news.url.isNotEmpty
+                                      ? news.url
+                                      : AppConstants.errorImage,
+                                  width: 140.w,
+                                  height: 110.h,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                              SizedBox(height: 12.h),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "2 months ago",
-                                    style: AppTextstyles.bw500s10
-                                        .copyWith(color: AppColors.white),
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Text(
-                                    "5.6K plays",
-                                    style: AppTextstyles.bw500s10
-                                        .copyWith(color: AppColors.white),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 12.h),
-                              Row(
-                                spacing: 8.w,
-                                children: [
-                                  CircleAvatar(radius: 10.r),
-                                  Text(
-                                    news.authorName,
-                                    style: AppTextstyles.bw600s10,
-                                  )
-                                ],
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      news.title,
+                                      style: AppTextstyles.h6w700s18
+                                          .copyWith(color: AppColors.white),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 12.h),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "2 months ago",
+                                          style: AppTextstyles.bw500s10
+                                              .copyWith(color: AppColors.white),
+                                        ),
+                                        SizedBox(width: 10.w),
+                                        Text(
+                                          "5.6K plays",
+                                          style: AppTextstyles.bw500s10
+                                              .copyWith(color: AppColors.white),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: 12.h),
+                                    Row(
+                                      spacing: 8.w,
+                                      children: [
+                                        CircleAvatar(radius: 10.r),
+                                        Text(
+                                          news.authorName,
+                                          style: AppTextstyles.bw600s10,
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 );
-              },
-            );
-          } else if (state is NewsError) {
-            return Center(
-              child: Text("Xatolik: ${state.message}"),
-            );
-          } else {
-            return SizedBox();
-          }
-        },
+              } else if (state is NewsError) {
+                return Center(
+                  child: Text("Xatolik: ${state.message}"),
+                );
+              } else {
+                return SizedBox();
+              }
+            },
+          ),
+          SizedBox(height: 50.h)
+        ],
       ),
     );
   }

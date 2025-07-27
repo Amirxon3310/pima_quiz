@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class PressEffect extends StatefulWidget {
   final Widget child;
   final VoidCallback onTap;
+  final HitTestBehavior? behavior;
 
   const PressEffect({
     super.key,
     required this.child,
     required this.onTap,
+    this.behavior
   });
 
   @override
@@ -34,6 +36,7 @@ class _PressEffectState extends State<PressEffect> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: widget.behavior,
       onTap: _handleTap,
       child: AnimatedScale(
         scale: _scale,

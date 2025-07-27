@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
-import 'package:pima_quiz/features/create/presentation/pages/create_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/categories_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/home_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/news_screen.dart';
+import 'package:pima_quiz/features/home/presentation/pages/top_users_screen.dart';
 import 'package:pima_quiz/features/home/presentation/widgets/custom_bnb.dart';
-import 'package:pima_quiz/features/join/presentation/pages/join_screen.dart';
-import 'package:pima_quiz/features/library/presentation/pages/library_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -18,9 +18,9 @@ class _MainScreenState extends State<MainScreen> {
   final ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
   List<Widget> screens = [
     HomeScreen(),
-    LibraryScreen(),
-    JoinScreen(),
-    CreateScreen(),
+    CategoriesScreen(),
+    NewsScreen(),
+    TopUsersScreen(),
     ProfileScreen(),
   ];
 

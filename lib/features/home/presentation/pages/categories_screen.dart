@@ -36,15 +36,21 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         centerTitle: false,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: PressEffect(
-            onTap: () => Navigator.pop(context),
-            child: SvgPicture.asset(
-              AppIcons.arrowLeft,
-              width: 28.w,
-              height: 28.h,
-              color: AppColors.white,
-            ),
-          ),
+          child: Navigator.canPop(context)
+              ? PressEffect(
+                  onTap: () {
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: SvgPicture.asset(
+                    AppIcons.arrowLeft,
+                    width: 28.w,
+                    height: 28.h,
+                    color: AppColors.white,
+                  ),
+                )
+              : null,
         ),
         title: Text(
           "Kategoriyalar",

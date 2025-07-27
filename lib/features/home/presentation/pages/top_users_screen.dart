@@ -36,15 +36,17 @@ class _TopUsersScreenState extends State<TopUsersScreen> {
         centerTitle: false,
         leading: Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: PressEffect(
-            onTap: () => Navigator.pop(context),
-            child: SvgPicture.asset(
-              AppIcons.arrowLeft,
-              width: 28.w,
-              height: 28.h,
-              color: AppColors.white,
-            ),
-          ),
+          child: Navigator.canPop(context)
+              ? PressEffect(
+                  onTap: () => Navigator.pop(context),
+                  child: SvgPicture.asset(
+                    AppIcons.arrowLeft,
+                    width: 28.w,
+                    height: 28.h,
+                    color: AppColors.white,
+                  ),
+                )
+              : null,
         ),
         title: Text(
           "Top Foydalanuvchilar",
@@ -91,60 +93,63 @@ class _TopUsersScreenState extends State<TopUsersScreen> {
             SizedBox(height: 24.h),
             ViewAllWidget(title: "People you may know", onTap: () {}),
             SizedBox(height: 24.h),
-            Flexible(child: BlocBuilder<UsersBloc, UsersState>(
-              builder: (context, state) {
-                if (state is UsersLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is UsersLoaded) {
-                  final usersList = state.filteredUsersList;
-                  return ListView.separated(
-                    itemBuilder: (context, index) {
-                      final user = usersList[index];
-                      return Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CircleAvatar(
-                            radius: 30.r,
-                            backgroundImage: NetworkImage(user.url.isNotEmpty
-                                ? user.url
-                                : AppConstants.errorImage),
-                          ),
-                          SizedBox(width: 10.w),
-                          Expanded(
-                            child: Text(
-                              user.name.isNotEmpty ? user.name : "Unknown",
-                              style: AppTextstyles.h6w600s18
-                                  .copyWith(color: AppColors.white),
+            Flexible(
+              child: BlocBuilder<UsersBloc, UsersState>(
+                builder: (context, state) {
+                  if (state is UsersLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is UsersLoaded) {
+                    final usersList = state.filteredUsersList;
+                    return ListView.separated(
+                      itemBuilder: (context, index) {
+                        final user = usersList[index];
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              radius: 30.r,
+                              backgroundImage: NetworkImage(user.url.isNotEmpty
+                                  ? user.url
+                                  : AppConstants.errorImage),
                             ),
-                          ),
-                          Spacer(),
-                          FilledButton(
-                            onPressed: () {},
-                            style: FilledButton.styleFrom(
-                                backgroundColor: AppColors.primary500),
-                            child: Text(
-                              user.point,
-                              style: AppTextstyles.bw600s14
-                                  .copyWith(color: AppColors.white),
+                            SizedBox(width: 10.w),
+                            Expanded(
+                              child: Text(
+                                user.name.isNotEmpty ? user.name : "Unknown",
+                                style: AppTextstyles.h6w600s18
+                                    .copyWith(color: AppColors.white),
+                              ),
                             ),
-                          )
-                        ],
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(height: 24.h);
-                    },
-                    itemCount: usersList.length,
-                  );
-                } else if (state is UsersError) {
-                  return Center(child: Text("Xatolik: ${state.message}"));
-                } else if (state is UsersSearching) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ))
+                            Spacer(),
+                            FilledButton(
+                              onPressed: () {},
+                              style: FilledButton.styleFrom(
+                                  backgroundColor: AppColors.primary500),
+                              child: Text(
+                                user.point,
+                                style: AppTextstyles.bw600s14
+                                    .copyWith(color: AppColors.white),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(height: 24.h);
+                      },
+                      itemCount: usersList.length,
+                    );
+                  } else if (state is UsersError) {
+                    return Center(child: Text("Xatolik: ${state.message}"));
+                  } else if (state is UsersSearching) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
+            ),
+            SizedBox(height: 50.h)
           ],
         ),
       ),
