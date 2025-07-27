@@ -8,7 +8,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/features/auth/data/datasource/auth_datasource_impl.dart';
 import 'package:pima_quiz/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:pima_quiz/features/auth/data/repository/otp_repository.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/otp_bloc/otp_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/splash_screen.dart';
 import 'package:pima_quiz/features/home/data/datasources/banners_remote_datasource.dart';
 import 'package:pima_quiz/features/home/data/datasources/categories_remote_datasource.dart';
@@ -130,6 +132,9 @@ class MyApp extends StatelessWidget {
                   QuestionsRemoteDatasourceImpl(FirebaseFirestore.instance),
                 ),
               ),
+            ),
+            BlocProvider(
+              create: (_) => OtpBloc(OtpRepository()),
             )
           ],
           child: MaterialApp(
