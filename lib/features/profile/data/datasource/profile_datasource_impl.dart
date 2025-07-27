@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pima_quiz/features/auth/data/models/user_model.dart';
 import 'package:pima_quiz/features/profile/data/datasource/profile_datasource.dart';
+import 'package:pima_quiz/features/profile/data/models/tests_done_model.dart';
 
 class ProfileDatasourceImpl implements ProfileDatasource {
   final FirebaseFirestore firestore;
@@ -59,6 +60,31 @@ class ProfileDatasourceImpl implements ProfileDatasource {
       print(stack);
       print(e);
       return false;
+    }
+  }
+
+  @override
+  Future<List<TestsDoneModel>> getTestsByUserId() async {
+    try {
+      DocumentSnapshot doc = await firestore
+          .collection('tests_done')
+          .doc(firebaseAuth.currentUser?.uid)
+          .get();
+
+      if (doc.exists) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        List<dynamic> testResults = data['tests'] ?? [];
+        List<TestsDoneModel> tests = testResults
+            .map((e) => TestsDoneModel.fromMap(e as Map<String, dynamic>))
+            .toList();
+
+        return tests;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print("Xatolik yuz berdi: $e");
+      return [];
     }
   }
 }

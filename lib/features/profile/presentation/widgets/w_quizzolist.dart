@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
-import 'package:pima_quiz/core/resources/app_images.dart';
+import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:pima_quiz/features/profile/presentation/bloc/profile_state.dart';
 
 class QuizzoList extends StatelessWidget {
   const QuizzoList({super.key});
@@ -12,6 +14,7 @@ class QuizzoList extends StatelessWidget {
     String subtitle,
     int questions,
     String type,
+    String image,
   ) =>
       Container(
         decoration: BoxDecoration(
@@ -31,7 +34,7 @@ class QuizzoList extends StatelessWidget {
                   bottomLeft: Radius.circular(16.r),
                 ),
                 image: DecorationImage(
-                  image: AssetImage(AppImages.personalInfoAvatar),
+                  image: NetworkImage(image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -103,18 +106,25 @@ class QuizzoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.all(0),
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: 10,
-      separatorBuilder: (context, index) => 12.height,
-      itemBuilder: (context, index) => _quizItem(
-        "Back to school quiz",
-        "Today 20 plays",
-        20,
-        "Public",
-      ),
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        return ListView.separated(
+            padding: EdgeInsets.all(0),
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: state.tests?.length ?? 0,
+            separatorBuilder: (context, index) => 12.height,
+            itemBuilder: (context, index) {
+              final test = state.tests?[index];
+              return _quizItem(
+                test?.name ?? '',
+                "Played ${test?.playersCount} players",
+                test?.quizCount ?? 0,
+                "Public",
+                test?.image ?? '',
+              );
+            });
+      },
     );
   }
 }

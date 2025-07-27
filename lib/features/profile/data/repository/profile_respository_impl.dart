@@ -1,5 +1,6 @@
 import 'package:pima_quiz/features/auth/data/models/user_model.dart';
 import 'package:pima_quiz/features/profile/data/datasource/profile_datasource.dart';
+import 'package:pima_quiz/features/profile/data/models/tests_done_model.dart';
 import 'package:pima_quiz/features/profile/domain/repository/profile_repository.dart';
 
 class ProfileRespositoryImpl implements ProfileRepository {
@@ -28,5 +29,10 @@ class ProfileRespositoryImpl implements ProfileRepository {
       phoneNumber: phoneNumber,
       age: age,
     );
+  }
+
+  @override
+  Future<List<TestsDoneModel>> getTestsByUserId() async {
+    return await dataSource.getTestsByUserId();
   }
 }

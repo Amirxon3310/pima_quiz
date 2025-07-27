@@ -1,4 +1,5 @@
 import 'package:pima_quiz/features/auth/data/models/user_model.dart';
+import 'package:pima_quiz/features/profile/data/models/tests_done_model.dart';
 
 abstract class ProfileDatasource {
   Future<UserModel?> getUserById();
@@ -10,4 +11,5 @@ abstract class ProfileDatasource {
     required String phoneNumber,
     required String age,
   });
+  Future<List<TestsDoneModel>> getTestsByUserId();
 }

@@ -12,7 +12,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(state.copyWith(isLoading: true, error: null));
         try {
           final user = await repository.getUserById();
-          emit(state.copyWith(isLoading: false, user: user));
+          final tests = await repository.getTestsByUserId();
+          emit(state.copyWith(isLoading: false, user: user, tests: tests));
         } catch (e, stack) {
           emit(state.copyWith(isLoading: false, error: e.toString()));
           print(stack);

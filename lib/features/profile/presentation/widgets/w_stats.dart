@@ -97,7 +97,7 @@ class Stats extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "${(state.user?.played == 0 || int.parse(state.user?.point ?? '0') == 0) ? 0 : (int.parse(state.user?.point ?? '0') / ((state.user?.played ?? 0) * 10)) * 100}%",
+                          "${((state.user?.played == 0 || int.parse(state.user?.point ?? '0') == 0) ? 0 : (int.parse(state.user?.point ?? '0') / ((state.user?.played ?? 0) * 10)) * 100).toInt()}%",
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontFamily: "Nunito",
@@ -135,7 +135,7 @@ class Stats extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "7",
+                          "--",
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontFamily: "Nunito",
@@ -144,7 +144,7 @@ class Stats extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Collections",
+                          "----",
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: "Nunito",
@@ -171,7 +171,7 @@ class Stats extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "372.5K",
+                          "--",
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontFamily: "Nunito",
@@ -180,7 +180,7 @@ class Stats extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Followers",
+                          "----",
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: "Nunito",
@@ -207,7 +207,7 @@ class Stats extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "269",
+                          "--",
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontFamily: "Nunito",
@@ -216,7 +216,7 @@ class Stats extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Following",
+                          "----",
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: "Nunito",

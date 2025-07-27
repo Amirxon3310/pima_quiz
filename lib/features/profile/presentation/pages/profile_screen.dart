@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
+import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:pima_quiz/features/profile/presentation/bloc/profile_state.dart';
 import 'package:pima_quiz/features/profile/presentation/widgets/w_header.dart';
 import 'package:pima_quiz/features/profile/presentation/widgets/w_quizzolist.dart';
 import 'package:pima_quiz/features/profile/presentation/widgets/w_stats.dart';
@@ -29,17 +32,21 @@ class ProfileScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "45 Quizzo",
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Nunito",
-                      color: Colors.white,
-                    ),
+                  BlocBuilder<ProfileBloc, ProfileState>(
+                    builder: (context, state) {
+                      return Text(
+                        "${state.tests?.length ?? 0} Quizzo",
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Nunito",
+                          color: Colors.white,
+                        ),
+                      );
+                    },
                   ),
                   Text(
-                    "Newest",
+                    "Played",
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
@@ -50,6 +57,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               QuizzoList(),
+              64.height,
             ],
           ),
         ),
