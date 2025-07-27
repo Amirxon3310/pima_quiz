@@ -65,6 +65,15 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       emit(state.copyWith(selectedAnswer: event.answerId));
     });
 
+    on<AddTestUserHistory>((event, emit) {
+      data.addTestForUser(
+        testId: event.testId,
+        image: event.image,
+        name: event.name,
+        quizCount: event.quizCount,
+      );
+    });
+
     on<RestartAllEvent>((event, emit) {
       emit(
         QuizState(

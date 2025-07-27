@@ -14,6 +14,7 @@ import 'package:pima_quiz/features/home/presentation/blocs/news_bloc/news_event.
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questions_state.dart';
+import 'package:pima_quiz/features/home/presentation/pages/quiz_details_screen.dart';
 import 'package:pima_quiz/features/home/presentation/pages/test_screen.dart';
 
 class CategoryDetailsScreen extends StatefulWidget {
@@ -40,6 +41,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('CategoryDetailsScreen');
     return Scaffold(
       backgroundColor: AppColors.dark1,
       appBar: AppBar(
@@ -155,7 +157,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  TestScreen(testId: questions.questionsBodyId),
+                                  QuizDetailsScreen(quizId: questions.id),
                             ),
                           );
                         },

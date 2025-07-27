@@ -28,3 +28,17 @@ class SelectedAnswerEvent extends QuizEvent {
 }
 
 class NextQuestion extends QuizEvent {}
+
+class AddTestUserHistory extends QuizEvent {
+  String testId;
+  String image;
+  String name;
+  int quizCount;
+
+  AddTestUserHistory({
+    required this.testId,
+    required this.image,
+    required this.name,
+    required this.quizCount,
+  });
+}

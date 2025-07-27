@@ -30,7 +30,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.quizId);
+    print('QuizDetailsScreen');
     return Scaffold(
       backgroundColor: AppColors.dark1,
       appBar: AppBar(
@@ -226,8 +226,12 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => TestScreen(
+                                        image: state.quiz?.photo ?? '',
+                                        name: state.quiz?.title ?? '',
                                         testId:
                                             state.quiz?.questionsBodyId ?? '',
+                                        quizCount: int.parse(
+                                            state.quiz?.questions ?? '0'),
                                       ),
                                     ),
                                   );

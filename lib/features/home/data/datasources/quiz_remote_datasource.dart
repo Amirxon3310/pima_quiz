@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pima_quiz/features/home/data/models/quiz_model.dart';
 import 'package:pima_quiz/features/home/data/models/test_model.dart';
 
@@ -7,12 +8,19 @@ abstract class QuizRemoteDatasource {
   Future<List<TestModel>> getTestsById(String id);
   Future<bool> checkAnswer(
       {required String questionId, required String answerId});
+  Future<void> addTestForUser({
+    required String testId,
+    required String image,
+    required String name,
+    required int quizCount,
+  });
 }
 
 class QuizRemoteDatasourceImpl extends QuizRemoteDatasource {
   final FirebaseFirestore firestore;
+  final FirebaseAuth firebaseAuth;
 
-  QuizRemoteDatasourceImpl(this.firestore);
+  QuizRemoteDatasourceImpl(this.firestore, this.firebaseAuth);
 
   @override
   Future<QuizModel?> getQuizById(String id) async {
@@ -64,6 +72,37 @@ class QuizRemoteDatasourceImpl extends QuizRemoteDatasource {
     } catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  @override
+  Future<void> addTestForUser({
+    required String testId,
+    required String image,
+    required String name,
+    required int quizCount,
+  }) async {
+    final docRef = FirebaseFirestore.instance
+        .collection('tests_done')
+        .doc(firebaseAuth.currentUser?.uid);
+
+    final newTestMap = {
+      'id': testId,
+      'image': image,
+      'name': name,
+      'quiz_count': quizCount
+    };
+
+    final docSnapshot = await docRef.get();
+
+    if (docSnapshot.exists) {
+      await docRef.update({
+        'tests': FieldValue.arrayUnion([newTestMap])
+      });
+    } else {
+      await docRef.set({
+        'tests': [newTestMap]
+      });
     }
   }
 }

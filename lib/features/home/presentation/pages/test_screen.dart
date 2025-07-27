@@ -15,7 +15,16 @@ import 'package:pima_quiz/features/home/presentation/widgets/variant_button.dart
 
 class TestScreen extends StatefulWidget {
   final String testId;
-  const TestScreen({super.key, required this.testId});
+  final String image;
+  final String name;
+  final int quizCount;
+  const TestScreen({
+    super.key,
+    required this.testId,
+    required this.image,
+    required this.name,
+    required this.quizCount,
+  });
 
   @override
   State<TestScreen> createState() => _TestScreenState();
@@ -45,6 +54,10 @@ class _TestScreenState extends State<TestScreen> {
                   builder: (context) => TestResultScreen(
                     totalQusetion: state.count,
                     correctAnswer: state.correctAnswer,
+                    testId: widget.testId,
+                    image: widget.image,
+                    quizCount: widget.quizCount,
+                    name: widget.name,
                   ),
                 ),
               );

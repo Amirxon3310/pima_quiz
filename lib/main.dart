@@ -67,7 +67,8 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(
               create: (context) => QuizBloc(
-                QuizRemoteDatasourceImpl(FirebaseFirestore.instance),
+                QuizRemoteDatasourceImpl(
+                    FirebaseFirestore.instance, FirebaseAuth.instance),
               ),
             ),
             BlocProvider(

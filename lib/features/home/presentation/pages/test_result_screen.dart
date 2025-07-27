@@ -10,14 +10,36 @@ import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 class TestResultScreen extends StatefulWidget {
   final int totalQusetion;
   final int correctAnswer;
-  const TestResultScreen(
-      {super.key, required this.totalQusetion, required this.correctAnswer});
+  final String testId;
+  final String image;
+  final String name;
+  final int quizCount;
+  const TestResultScreen({
+    super.key,
+    required this.totalQusetion,
+    required this.correctAnswer,
+    required this.testId,
+    required this.image,
+    required this.name,
+    required this.quizCount,
+  });
 
   @override
   State<TestResultScreen> createState() => _TestResultScreenState();
 }
 
 class _TestResultScreenState extends State<TestResultScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<QuizBloc>().add(AddTestUserHistory(
+          testId: widget.testId,
+          image: widget.image,
+          name: widget.name,
+          quizCount: widget.quizCount,
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
