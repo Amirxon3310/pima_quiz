@@ -11,8 +11,9 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
       (event, emit) async {
         emit(OtpSending());
         try {
-          await repository.sendOtpToEmail(event.email);
-          emit(OtpSent());
+          final otp = await repository.sendOtpToEmail(event.email);
+          print("OTP BLOCDA: $otp");
+          emit(OtpSent(otp));
         } catch (e) {
           emit(OtpError(e.toString()));
         }

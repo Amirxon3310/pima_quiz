@@ -15,7 +15,7 @@ class OtpRepository {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data["success"] == true) {
-          return data["message"];
+          return data["otp"];
         } else {
           throw Exception(data["message"] ?? "Failed to send OTP");
         }

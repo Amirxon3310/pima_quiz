@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/core/widgets/custom_textfield.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/otp_bloc/otp_bloc.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/otp_bloc/otp_event.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/otp_verification_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -71,11 +74,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               text: "Continue",
               onTap: () {
                 if (key.currentState!.validate()) {
+                  final email = controller.text.trim();
+                  if (email.isNotEmpty) {
+                    context.read<OtpBloc>().add(SendOtpPressed(email));
+                  }
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OtpVerificationScreen(),
-                    ),
+                        builder: (context) => OtpVerificationScreen()),
                   );
                 }
               },

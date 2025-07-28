@@ -6,6 +6,8 @@ import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/otp_bloc/otp_bloc.dart';
+import 'package:pima_quiz/features/auth/presentation/bloc/otp_bloc/otp_state.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/create_new_password_screen.dart';
 import 'package:pinput/pinput.dart';
 
@@ -33,6 +35,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     super.didChangeDependencies();
   }
 
+  String? otp;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,75 +48,88 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: Column(
-          children: [
-            Text("You’ve got mail 📧",
-                style: TextStyle(
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Nunito',
-                  color: Colors.white,
-                )),
-            SizedBox(height: 8.h),
-            Text(
-              "We have sent the OTP verification code to your email address. Check your email and enter the code below.",
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontFamily: 'Nunito',
-                color: Colors.white70,
-              ),
-            ),
-            SizedBox(height: 32.h),
-            Pinput(
-              length: 4,
-              defaultPinTheme: defaultPinTheme,
-              focusedPinTheme: defaultPinTheme.copyWith(
-                decoration: defaultPinTheme.decoration!.copyWith(
-                  border: Border.all(color: Colors.white, width: 2),
-                ),
-              ),
-              submittedPinTheme: defaultPinTheme,
-              showCursor: true,
-              keyboardType: TextInputType.number,
-              onChanged: (value) {
-                context.read<AuthBloc>().add(ChangeOtp(value: value));
-              },
-            ),
-            SizedBox(height: 24.h),
-            BlocBuilder<AuthBloc, AuthState>(
-              builder: (context, state) {
-                return Text(
-                  "Didn’t receive email ?\nYou can resend code in ${state.countdown} s",
+        child: BlocBuilder<OtpBloc, OtpState>(
+          builder: (context, state) {
+            print("OTP tepasi");
+            if (state is OtpSent) {
+              print("OTP: ${state.otp}");
+              otp = state.otp;
+            }
+            return Column(
+              children: [
+                Text("You’ve got mail 📧",
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Nunito',
+                      color: Colors.white,
+                    )),
+                SizedBox(height: 8.h),
+                Text(
+                  textAlign: TextAlign.center,
+                  "We have sent the OTP verification code to your email address. Check your email and enter the code below.",
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontFamily: 'Nunito',
                     color: Colors.white70,
                   ),
-                  textAlign: TextAlign.center,
-                );
-              },
-            ),
-            Spacer(),
-            BlocBuilder<AuthBloc, AuthState>(
-              builder: (context, state) {
-                return CustomButton(
-                  isFilled: state.otp.length == 4,
-                  text: "Confirm",
-                  onTap: state.otp.length == 4 && state.countdown > 0
-                      ? () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CreateNewPasswordScreen(),
-                            ),
-                          );
-                        }
-                      : () {},
-                );
-              },
-            ),
-            SizedBox(height: 24.h),
-          ],
+                ),
+                SizedBox(height: 32.h),
+                Pinput(
+                  length: 6,
+                  defaultPinTheme: defaultPinTheme,
+                  focusedPinTheme: defaultPinTheme.copyWith(
+                    decoration: defaultPinTheme.decoration!.copyWith(
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                  ),
+                  submittedPinTheme: defaultPinTheme,
+                  showCursor: true,
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    context.read<AuthBloc>().add(ChangeOtp(value: value));
+                  },
+                ),
+                SizedBox(height: 24.h),
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return Text(
+                      "Didn’t receive email ?\nYou can resend code in ${state.countdown} s",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontFamily: 'Nunito',
+                        color: Colors.white70,
+                      ),
+                      textAlign: TextAlign.center,
+                    );
+                  },
+                ),
+                Spacer(),
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return CustomButton(
+                      isFilled: state.otp.length == 6,
+                      text: "Confirm",
+                      onTap: state.otp.length == 6 &&
+                              state.countdown > 0 &&
+                              state.otp == otp
+                          ? () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CreateNewPasswordScreen(),
+                                ),
+                              );
+                            }
+                          : () {},
+                    );
+                  },
+                ),
+                SizedBox(height: 24.h),
+              ],
+            );
+          },
         ),
       ),
     );
