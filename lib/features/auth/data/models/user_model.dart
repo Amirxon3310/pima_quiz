@@ -69,7 +69,7 @@ class UserModel {
       'birthday': birthday != null ? Timestamp.fromDate(birthday!) : null,
       'createdAt': Timestamp.fromDate(createdAt ?? DateTime.now()),
       'image': image,
-      'point': '10',
+      'point': '0',
       'played': 0,
     };
   }

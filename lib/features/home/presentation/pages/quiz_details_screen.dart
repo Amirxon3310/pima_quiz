@@ -193,7 +193,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
                             ),
                           ),
                           Text(
-                            "Invite your friends to play state.quiz? together!",
+                            "Invite your friends to play ${state.quiz?.title} together!",
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: "Nunito",
@@ -240,7 +240,8 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
                             ),
                           ],
                         ),
-                      )
+                      ),
+                      2.height,
                     ],
                   );
           },
