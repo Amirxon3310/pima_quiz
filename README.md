@@ -31,3 +31,39 @@
 | **flutter_screenutil**     | Responsive UI design based on screen sizes   |
 
 ---
+
+
+## 📸 Screenshots
+
+### 🟢 Splash & Home Screens
+| Splash Screen | Home Screen |
+|---------------|-------------|
+| ![Splash](assets/screenshots/splash.png) | ![Home](assets/screenshots/home.png) |
+
+---
+
+### 🧾 Quiz Details Screen
+
+![Quiz Details Screen](assets/screenshots/quiz_details.png)
+
+---
+
+### 🧪 Test Screens
+
+| Test Step 1 | Test Step 2 |
+|-------------|-------------|
+| ![Test1](assets/screenshots/test.png) | ![Test2](assets/screenshots/test2.png) |
+
+**Final Answer Review:**
+
+![Test3](assets/screenshots/test3.png)
+
+---
+
+### 🏁 Result & 🏆 Leaderboards Screens
+
+| Result Screen | Leaderboards |
+|---------------|--------------|
+| ![Result](assets/screenshots/result.png) | ![Leaderboards](assets/screenshots/leaderboards.png) |
+
+
