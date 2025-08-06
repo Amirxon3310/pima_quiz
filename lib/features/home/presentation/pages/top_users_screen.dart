@@ -10,7 +10,6 @@ import 'package:pima_quiz/core/widgets/press_effect.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_event.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_state.dart';
-import 'package:pima_quiz/features/home/presentation/widgets/view_all_widget.dart';
 
 class TopUsersScreen extends StatefulWidget {
   const TopUsersScreen({super.key});
@@ -91,8 +90,8 @@ class _TopUsersScreenState extends State<TopUsersScreen> {
               ),
             ),
             SizedBox(height: 24.h),
-            ViewAllWidget(title: "People you may know", onTap: () {}),
-            SizedBox(height: 24.h),
+            // ViewAllWidget(title: "People you may know", onTap: () {}),
+            // SizedBox(height: 24.h),
             Flexible(
               child: BlocBuilder<UsersBloc, UsersState>(
                 builder: (context, state) {

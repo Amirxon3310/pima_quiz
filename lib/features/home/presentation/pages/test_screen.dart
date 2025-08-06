@@ -206,6 +206,7 @@ class _TestScreenState extends State<TestScreen> {
                                             Flexible(
                                               flex: 1,
                                               child: VariantButton(
+                                                enabled: !state.isAnswered,
                                                 onTap: () {
                                                   context.read<QuizBloc>().add(
                                                       SelectedAnswerEvent(
@@ -236,6 +237,7 @@ class _TestScreenState extends State<TestScreen> {
                                             Flexible(
                                               flex: 1,
                                               child: VariantButton(
+                                                enabled: !state.isAnswered,
                                                 onTap: () {
                                                   context.read<QuizBloc>().add(
                                                       SelectedAnswerEvent(
@@ -266,6 +268,7 @@ class _TestScreenState extends State<TestScreen> {
                                             Flexible(
                                               flex: 1,
                                               child: VariantButton(
+                                                enabled: !state.isAnswered,
                                                 onTap: () {
                                                   context.read<QuizBloc>().add(
                                                       SelectedAnswerEvent(
@@ -296,6 +299,7 @@ class _TestScreenState extends State<TestScreen> {
                                             Flexible(
                                               flex: 1,
                                               child: VariantButton(
+                                                enabled: !state.isAnswered,
                                                 onTap: () {
                                                   context.read<QuizBloc>().add(
                                                       SelectedAnswerEvent(

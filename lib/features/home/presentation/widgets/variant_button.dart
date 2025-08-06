@@ -7,18 +7,21 @@ class VariantButton extends StatelessWidget {
   final String title;
   final Function onTap;
   final Color titleColor;
-  const VariantButton(
-      {super.key,
-      required this.color,
-      required this.title,
-      required this.onTap,
-      required this.titleColor});
+  final bool enabled;
+  const VariantButton({
+    super.key,
+    required this.color,
+    required this.title,
+    required this.onTap,
+    required this.titleColor,
+    this.enabled = true,
+  });
 
   @override
   Widget build(BuildContext context) {
     return PressEffect(
       onTap: () {
-        onTap();
+        enabled ? onTap() : null;
       },
       child: Container(
         width: double.infinity,

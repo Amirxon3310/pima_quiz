@@ -39,22 +39,22 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
             ),
           ),
         ),
-        actions: [
-          SvgPicture.asset(
-            AppIcons.send,
-            width: 28,
-            height: 28,
-            color: AppColors.white,
-          ),
-          SizedBox(width: 20.w),
-          SvgPicture.asset(
-            AppIcons.moreCircle,
-            width: 28,
-            height: 28,
-            color: AppColors.white,
-          ),
-          SizedBox(width: 24.w)
-        ],
+        // actions: [
+        //   SvgPicture.asset(
+        //     AppIcons.send,
+        //     width: 28,
+        //     height: 28,
+        //     color: AppColors.white,
+        //   ),
+        //   SizedBox(width: 20.w),
+        //   SvgPicture.asset(
+        //     AppIcons.moreCircle,
+        //     width: 28,
+        //     height: 28,
+        //     color: AppColors.white,
+        //   ),
+        //   SizedBox(width: 24.w)
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(24),
