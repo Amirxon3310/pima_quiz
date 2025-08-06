@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pima_quiz/core/constants/app_constants.dart';
-import 'package:pima_quiz/core/extensions/app_extensions.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
@@ -63,17 +62,17 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
           widget.category.title,
           style: AppTextstyles.h4w700s24.copyWith(color: AppColors.white),
         ),
-        actions: [
-          SvgPicture.asset(
-            AppIcons.search,
-            width: 28,
-            height: 28,
-            color: AppColors.white,
-          ),
-          SizedBox(
-            width: 24.w,
-          )
-        ],
+        // actions: [
+        //   SvgPicture.asset(
+        //     AppIcons.search,
+        //     width: 28,
+        //     height: 28,
+        //     color: AppColors.white,
+        //   ),
+        //   SizedBox(
+        //     width: 24.w,
+        //   )
+        // ],
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
@@ -109,27 +108,27 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                     }
                   },
                 ),
-                PressEffect(
-                  onTap: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Default",
-                        style: AppTextstyles.bw600s16
-                            .copyWith(color: AppColors.primary500),
-                      ),
-                      12.width,
-                      SvgPicture.asset(
-                        AppIcons.swap,
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.scaleDown,
-                        color: AppColors.primary500,
-                      )
-                    ],
-                  ),
-                )
+                // PressEffect(
+                //   onTap: () {},
+                //   child: Row(
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Text(
+                //         "Default",
+                //         style: AppTextstyles.bw600s16
+                //             .copyWith(color: AppColors.primary500),
+                //       ),
+                //       12.width,
+                //       SvgPicture.asset(
+                //         AppIcons.swap,
+                //         width: 24,
+                //         height: 24,
+                //         fit: BoxFit.scaleDown,
+                //         color: AppColors.primary500,
+                //       )
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),

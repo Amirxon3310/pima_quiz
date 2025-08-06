@@ -56,17 +56,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           "Kategoriyalar",
           style: AppTextstyles.h4w700s24.copyWith(color: AppColors.white),
         ),
-        actions: [
-          SvgPicture.asset(
-            AppIcons.search,
-            width: 28,
-            height: 28,
-            color: AppColors.white,
-          ),
-          SizedBox(
-            width: 24.w,
-          )
-        ],
+        // actions: [
+        //   SvgPicture.asset(
+        //     AppIcons.search,
+        //     width: 28,
+        //     height: 28,
+        //     color: AppColors.white,
+        //   ),
+        //   SizedBox(
+        //     width: 24.w,
+        //   )
+        // ],
       ),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {

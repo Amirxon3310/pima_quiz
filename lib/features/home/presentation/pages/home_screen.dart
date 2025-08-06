@@ -2,12 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pima_quiz/core/constants/app_constants.dart';
 import 'package:pima_quiz/core/data/local_datasource.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
-import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
 import 'package:pima_quiz/core/resources/app_textstyles.dart';
@@ -89,24 +87,24 @@ class _HomeScreenState extends State<HomeScreen> {
           "Pima Quiz",
           style: AppTextstyles.h4w700s24.copyWith(color: AppColors.white),
         ),
-        actions: [
-          SvgPicture.asset(
-            AppIcons.search,
-            width: 28.w,
-            height: 28.h,
-            fit: BoxFit.scaleDown,
-            color: AppColors.white,
-          ),
-          SizedBox(width: 20.w),
-          SvgPicture.asset(
-            AppIcons.notification,
-            width: 28.w,
-            height: 28.h,
-            fit: BoxFit.scaleDown,
-            color: AppColors.white,
-          ),
-          SizedBox(width: 24.w),
-        ],
+        // actions: [
+        //   SvgPicture.asset(
+        //     AppIcons.search,
+        //     width: 28.w,
+        //     height: 28.h,
+        //     fit: BoxFit.scaleDown,
+        //     color: AppColors.white,
+        //   ),
+        //   SizedBox(width: 20.w),
+        //   SvgPicture.asset(
+        //     AppIcons.notification,
+        //     width: 28.w,
+        //     height: 28.h,
+        //     fit: BoxFit.scaleDown,
+        //     color: AppColors.white,
+        //   ),
+        //   SizedBox(width: 24.w),
+        // ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
@@ -254,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 24.h),
               ViewAllWidget(
-                title: "Top foydalanuvchilar",
+                title: "Foydalanuvchilar",
                 onTap: () {
                   Navigator.push(
                     context,
@@ -375,53 +373,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               SizedBox(height: 24.h),
-              ViewAllWidget(title: "Trenddagi quizlar", onTap: () {}),
-              SizedBox(
-                height: 16.h,
-              ),
-              SizedBox(
-                height: 260.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.none,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ContainerWidget(
-                      image:
-                          "https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg?semt=ais_hybrid&w=740",
-                      title: "Get Smarter with Productivity Quizz...",
-                      authorName: "Titus Kitamura",
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: 16.w);
-                  },
-                ),
-              ),
-              SizedBox(height: 24.h),
-              ViewAllWidget(title: "Top Picks", onTap: () {}),
-              SizedBox(
-                height: 16.h,
-              ),
-              SizedBox(
-                height: 260.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.none,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ContainerWidget(
-                      image:
-                          "https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg?semt=ais_hybrid&w=740",
-                      title: "Get Smarter with Productivity Quizz...",
-                      authorName: "Titus Kitamura",
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: 16.w);
-                  },
-                ),
-              ),
+              // ViewAllWidget(title: "Trenddagi quizlar", onTap: () {}),
+              // SizedBox(height: 16.h),
+              // SizedBox(
+              //   height: 260.h,
+              //   child: ListView.separated(
+              //     scrollDirection: Axis.horizontal,
+              //     clipBehavior: Clip.none,
+              //     itemCount: 10,
+              //     itemBuilder: (context, index) {
+              //       return ContainerWidget(
+              //         image:
+              //             "https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg?semt=ais_hybrid&w=740",
+              //         title: "Get Smarter with Productivity Quizz...",
+              //         authorName: "Titus Kitamura",
+              //       );
+              //     },
+              //     separatorBuilder: (BuildContext context, int index) {
+              //       return SizedBox(width: 16.w);
+              //     },
+              //   ),
+              // ),
+              // SizedBox(height: 24.h),
+              // ViewAllWidget(title: "Top Picks", onTap: () {}),
+              // SizedBox(height: 16.h),
+              // SizedBox(
+              //   height: 260.h,
+              //   child: ListView.separated(
+              //     scrollDirection: Axis.horizontal,
+              //     clipBehavior: Clip.none,
+              //     itemCount: 10,
+              //     itemBuilder: (context, index) {
+              //       return ContainerWidget(
+              //         image:
+              //             "https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg?semt=ais_hybrid&w=740",
+              //         title: "Get Smarter with Productivity Quizz...",
+              //         authorName: "Titus Kitamura",
+              //       );
+              //     },
+              //     separatorBuilder: (BuildContext context, int index) {
+              //       return SizedBox(width: 16.w);
+              //     },
+              //   ),
+              // ),
               SizedBox(height: 50.h)
             ],
           ),

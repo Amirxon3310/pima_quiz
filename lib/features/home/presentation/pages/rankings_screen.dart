@@ -43,11 +43,18 @@ class _RankingsScreenState extends State<RankingsScreen> {
             elevation: 0,
             leading: PressEffect(
               onTap: () {
-                Navigator.push(
+                // Navigator.pushAndRemoveUntil(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => MainScreen(),
+                //   ),
+                // );
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MainScreen(),
                   ),
+                  (Route<dynamic> route) => false,
                 );
               },
               child: Icon(Icons.close, color: AppColors.white, size: 28),
@@ -227,11 +234,19 @@ class _RankingsScreenState extends State<RankingsScreen> {
                   Expanded(
                     child: PressEffect(
                       onTap: () {
-                        Navigator.push(
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => MainScreen(),
+                        //   ),
+                        // );
+
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => MainScreen(),
                           ),
+                          (Route<dynamic> route) => false,
                         );
                       },
                       child: Container(

@@ -74,6 +74,7 @@ class _QuizDetailsScreenState extends State<QuizDetailsScreen> {
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: BlocBuilder<QuizBloc, QuizState>(
           builder: (context, state) {
+            print("Favorited: ${state.quiz!.favorited ?? "Yo'q"}");
             return state.isLoading
                 ? Center(
                     child: CircularProgressIndicator.adaptive(),

@@ -27,7 +27,7 @@ class CustomBnb extends StatelessWidget {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 20.w, sigmaY: 20.h),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 28.w),
+                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(24.r),
@@ -37,14 +37,14 @@ class CustomBnb extends StatelessWidget {
                   border: Border(top: BorderSide(color: AppColors.dark3)),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(
                     5,
                     (index) {
                       final icons = [
                         AppIcons.home,
                         AppIcons.category,
-                        "assets/icons/join.svg",
+                        "assets/images/logo_pima_blue.png",
                         AppIcons.threeUser,
                         AppIcons.profile
                       ];

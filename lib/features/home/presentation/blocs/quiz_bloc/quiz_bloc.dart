@@ -44,25 +44,30 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       }
 
       emit(state.copyWith(
-          checkBox: result, count: state.count + 1, nextQuestion: true));
+          checkBox: result,
+          count: state.count + 1,
+          nextQuestion: true,
+          isAnswered: true));
     });
 
     on<NextQuestion>((event, emit) {
       final newIndex = state.index + 1;
       if (newIndex < state.tests.length) {
         emit(state.copyWith(
-          index: newIndex,
-          selectedAnswer: "",
-          nextQuestion: false,
-          count2: state.count,
-        ));
+            index: newIndex,
+            selectedAnswer: "",
+            nextQuestion: false,
+            count2: state.count,
+            isAnswered: false));
       } else {
         emit(state.copyWith(theEnd: true, nextQuestion: false));
       }
     });
 
     on<SelectedAnswerEvent>((event, emit) {
-      emit(state.copyWith(selectedAnswer: event.answerId));
+      if (!state.isAnswered) {
+        emit(state.copyWith(selectedAnswer: event.answerId));
+      }
     });
 
     on<AddTestUserHistory>((event, emit) {
