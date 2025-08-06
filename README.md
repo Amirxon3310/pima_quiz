@@ -35,35 +35,35 @@
 
 ## 📸 Screenshots
 
-### 🟢 Splash & Home Screens
-| Splash Screen | Home Screen |
-|---------------|-------------|
-| ![Splash](assets/screenshots/splash.png) | ![Home](assets/screenshots/home.png) |
+<table>
+  <tr>
+    <td><b>Splash Screen</b></td>
+    <td><b>Home Screen</b></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/splash.png" width="250"/></td>
+    <td><img src="assets/screenshots/home.png" width="250"/></td>
+  </tr>
+</table>
 
----
+### 🏠 Quiz Details Screen
+<img src="assets/screenshots/quiz_details.png" width="300"/>
 
-### 🧾 Quiz Details Screen
+### 🧪 Test Screen
+<img src="assets/screenshots/test.png" width="300"/>
+<img src="assets/screenshots/test2.png" width="300"/>
+<img src="assets/screenshots/test3.png" width="300"/>
 
-![Quiz Details Screen](assets/screenshots/quiz_details.png)
+<table>
+  <tr>
+    <td><b>Result Screen</b></td>
+    <td><b>Leaderboards</b></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/result.png" width="250"/></td>
+    <td><img src="assets/screenshots/leaderboard.png" width="250"/></td>
+  </tr>
+</table>
 
----
-
-### 🧪 Test Screens
-
-| Test Step 1 | Test Step 2 |
-|-------------|-------------|
-| ![Test1](assets/screenshots/test.png) | ![Test2](assets/screenshots/test2.png) |
-
-**Final Answer Review:**
-
-![Test3](assets/screenshots/test3.png)
-
----
-
-### 🏁 Result & 🏆 Leaderboards Screens
-
-| Result Screen | Leaderboards |
-|---------------|--------------|
-| ![Result](assets/screenshots/result.png) | ![Leaderboards](assets/screenshots/leaderboards.png) |
 
 
