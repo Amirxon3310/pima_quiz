@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pima_quiz/features/auth/domain/repository/auth_repository.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Timer? timer;
@@ -23,6 +24,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(state.copyWith(status: AuthStatus.loading));
       try {
         await repository.register(user: event.user, password: event.password);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
         emit(state.copyWith(status: AuthStatus.success));
       } catch (e) {
         emit(state.copyWith(
@@ -36,6 +39,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(state.copyWith(status: AuthStatus.loading));
       try {
         await repository.login(event.email, event.password);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
         emit(state.copyWith(status: AuthStatus.success));
       } catch (e) {
         emit(state.copyWith(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/widgets/press_effect.dart';
 
 class CustomDatetimeWidget extends StatelessWidget {
@@ -38,7 +39,7 @@ class CustomDatetimeWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 12.h),
               decoration: const BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(color: Color(0xff6949FF)),
+                  bottom: BorderSide(color: AppColors.primary500),
                 ),
               ),
               child: Text(

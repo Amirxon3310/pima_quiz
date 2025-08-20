@@ -35,9 +35,12 @@ import 'package:pima_quiz/features/home/presentation/blocs/questions_bloc/questi
 import 'package:pima_quiz/features/home/presentation/blocs/quiz_bloc/quiz_bloc.dart';
 import 'package:pima_quiz/features/home/presentation/blocs/user_bloc/users_bloc.dart';
 import 'package:pima_quiz/features/profile/data/datasource/profile_datasource_impl.dart';
+import 'package:pima_quiz/features/profile/data/datasource/quiz_attempt_remote_datasource.dart';
 import 'package:pima_quiz/features/profile/data/repository/profile_respository_impl.dart';
+import 'package:pima_quiz/features/profile/data/repository/quiz_attempt_repository_impl.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:pima_quiz/features/profile/presentation/bloc/profile_event.dart';
+import 'package:pima_quiz/features/profile/presentation/bloc/quiz_attempt_bloc/quiz_attempt_bloc.dart';
 import 'package:pima_quiz/firebase_options.dart';
 
 void main() async {
@@ -136,7 +139,10 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (_) => OtpBloc(OtpRepository()),
-            )
+            ),
+            BlocProvider(
+                create: (_) => QuizAttemptBloc(QuizAttemptRepositoryImpl(
+                    QuizAttemptRemoteDataSource(FirebaseFirestore.instance))))
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

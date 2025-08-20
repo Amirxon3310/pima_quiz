@@ -8,7 +8,8 @@ import 'package:pima_quiz/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_event.dart';
 import 'package:pima_quiz/features/auth/presentation/bloc/auth_state.dart';
 import 'package:pima_quiz/features/auth/presentation/pages/login_screen.dart';
-import 'package:pima_quiz/features/auth/presentation/pages/select_accaount_type.dart';
+import 'package:pima_quiz/features/auth/presentation/pages/register_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -34,6 +35,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "text": "Play and take quiz challenges together with your friends.",
     },
   ];
+
+  Future<void> saveLoginState() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+  }
+
+  Future<bool> isUserLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLoggedIn') ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +123,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SelectAccaountType(),
+                          builder: (context) => RegisterScreen(),
                         ),
                       );
                     }

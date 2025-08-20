@@ -5,7 +5,7 @@ import 'package:pima_quiz/core/widgets/press_effect.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final bool isFilled;
   final Color? fillColor;
 
@@ -20,7 +20,9 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PressEffect(
-      onTap: onTap,
+      onTap: () {
+        onTap!();
+      },
       child: SizedBox(
         width: double.infinity,
         height: 48.h,
