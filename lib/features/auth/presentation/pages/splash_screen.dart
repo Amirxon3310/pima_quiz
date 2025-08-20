@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/resources/app_lotties.dart';
+import 'package:pima_quiz/features/auth/presentation/pages/on_boarding.dart';
 import 'package:pima_quiz/features/home/presentation/pages/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,18 +19,28 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    _checkLoginStatus();
+  }
 
-    Future.delayed(
-      Duration(seconds: 3),
-      () {
-        if (mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MainScreen()),
-          );
-        }
-      },
-    );
+  Future<void> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    if (isLoggedIn) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const MainScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+      );
+    }
   }
 
   @override

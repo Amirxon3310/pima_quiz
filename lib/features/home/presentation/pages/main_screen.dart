@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/features/home/presentation/pages/categories_screen.dart';
@@ -16,16 +17,27 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
-  List<Widget> screens = [
-    HomeScreen(),
-    CategoriesScreen(),
-    NewsScreen(),
-    TopUsersScreen(),
-    ProfileScreen(),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+
+    if (uid == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text("Iltimos, avval login qiling"),
+        ),
+      );
+    }
+
+    final List<Widget> screens = [
+      const HomeScreen(),
+      const CategoriesScreen(),
+      const NewsScreen(),
+      const TopUsersScreen(),
+      ProfileScreen(uid: uid),
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.dark1,
       body: Stack(

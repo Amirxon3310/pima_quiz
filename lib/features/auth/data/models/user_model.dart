@@ -5,6 +5,7 @@ enum UserStatus {
   stduent,
   schoolStudent,
   worker,
+  guest,
 }
 
 class UserModel {

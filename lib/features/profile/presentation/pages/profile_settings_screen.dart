@@ -8,15 +8,21 @@ import 'package:pima_quiz/core/resources/app_icons.dart';
 import 'package:pima_quiz/core/resources/app_images.dart';
 import 'package:pima_quiz/core/widgets/custom_button.dart';
 import 'package:pima_quiz/core/widgets/custom_modal_sheet.dart';
-import 'package:pima_quiz/features/auth/presentation/pages/login_screen.dart';
+import 'package:pima_quiz/features/auth/presentation/pages/on_boarding.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/help_center_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/music_and_effects_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/securitt_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/pages/personal_info_screen.dart';
 import 'package:pima_quiz/features/profile/presentation/widgets/settings_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileSettingsScreen extends StatelessWidget {
   const ProfileSettingsScreen({super.key});
+
+  Future<void> logoutUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -198,13 +204,18 @@ class ProfileSettingsScreen extends StatelessWidget {
                                   flex: 1,
                                   child: CustomButton(
                                     text: "Yes, logout",
-                                    onTap: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginScreen(),
-                                        ),
-                                      );
+                                    onTap: () async {
+                                      await logoutUser();
+                                      if (context.mounted) {
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                OnboardingScreen(),
+                                          ),
+                                          (route) => false,
+                                        );
+                                      }
                                     },
                                   ),
                                 ),

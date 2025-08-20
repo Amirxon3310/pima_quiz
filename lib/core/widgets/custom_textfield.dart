@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pima_quiz/core/resources/app_colors.dart';
 import 'package:pima_quiz/core/widgets/press_effect.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -59,6 +60,7 @@ class CustomTextField extends StatelessWidget {
               validator: validator,
               controller: controller,
               obscureText: isPassword,
+              cursorColor: AppColors.primary500,
               style: TextStyle(
                 fontFamily: "Nunito",
                 color: Colors.white,
@@ -69,15 +71,14 @@ class CustomTextField extends StatelessWidget {
                   hintStyle:
                       TextStyle(color: Colors.white70, fontFamily: "Nunito"),
                   suffixIcon: isPassword
-                      ? const Icon(Icons.visibility_off,
-                          color: Color(0xff6949FF))
+                      ? Icon(Icons.visibility_off, color: AppColors.primary500)
                       : null,
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xff6949FF)),
+                    borderSide: BorderSide(color: AppColors.primary500),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xff6949FF),
+                      color: AppColors.primary500,
                     ),
                   ),
                   errorStyle: TextStyle(
